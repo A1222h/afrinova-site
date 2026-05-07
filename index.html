@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Afrinova Tech — L'Afrique innove, le monde avance</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+    <meta name="description" content="Solutions digitales sur mesure. Agadez, Niger.">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#D4AF37">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/mobile.css">
+    <script src="assets/js/lang.js"></script>
+</head>
+<body>
+
+<div class="particles-container" id="particles"></div>
+
+<nav class="navbar" id="navbar">
+    <a href="index.html" class="nav-logo">
+        <div class="nav-logo-icon"><img src="assets/images/logo.png" alt="Afrinova"></div>
+        <div class="nav-logo-text">AFRINOVA<span>TECH</span></div>
+    </a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" class="active">Accueil</a></li>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="galerie.html">📸 Galerie</a></li>
+        <li><a href="nouveautes-site.html">🆕 Nouveautés</a></li>
+        <li><a href="devis.html">💰 Devis</a></li>
+        <li><a href="blog/index.html">📝 Blog</a></li>
+        <li><a href="index.html#contact">📞 Contact</a></li>
+        <li>
+            <select onchange="switchLanguage(this.value)" style="background:#111;color:#D4AF37;border:1px solid rgba(212,175,55,0.3);padding:5px 10px;border-radius:5px;font-size:14px;cursor:pointer;">
+                <option value="fr">🇫🇷</option>
+                <option value="en">🇬🇧</option>
+                <option value="ha">🇳🇪</option>
+            </select>
+        </li>
+    </ul>
+    <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+</nav>
+
+<section class="hero">
+    <div class="hero-logo"><img src="assets/images/logo.png" alt="Logo"></div>
+    <h1>AFRINOVA TECH</h1>
+    <p class="hero-subtitle">SOLUTIONS DIGITALES</p>
+    <p class="hero-tagline">L'Afrique innove, le monde avance</p>
+    <div class="hero-services">
+        <span class="hero-service-tag">Sites Web</span>
+        <span class="hero-service-tag">Apps Mobiles</span>
+        <span class="hero-service-tag">Logiciels</span>
+        <span class="hero-service-tag">Design</span>
+    </div>
+    <div class="hero-cta">
+        <a href="devis.html" class="btn-primary"><span>Demander un devis</span><span>→</span></a>
+        <a href="#services" class="btn-secondary"><span>Nos services</span><span>↓</span></a>
+    </div>
+    <div class="scroll-indicator"><span>Défiler</span><div class="mouse"></div></div>
+</section>
+
+<section class="services-section" id="services">
+    <div class="section-header">
+        <div class="section-label">Ce que nous faisons</div>
+        <h2 class="section-title">Nos Services</h2>
+        <div class="section-divider"></div>
+    </div>
+    <div class="services-container">
+        <div class="services-track" id="servicesTrack">
+            <div class="service-card"><div class="service-icon">🌐</div><h3>Sites Web</h3><p>Sites modernes, rapides et optimisés SEO.</p><ul class="service-features"><li>Vitrine & e-commerce</li><li>Design responsive</li><li>SEO inclus</li></ul><a href="devis.html" class="service-cta">Devis →</a></div>
+            <div class="service-card"><div class="service-icon">📱</div><h3>Apps Mobiles</h3><p>iOS et Android sur mesure.</p><ul class="service-features"><li>Natif iOS/Android</li><li>Notifications push</li><li>Publication stores</li></ul><a href="devis.html" class="service-cta">Devis →</a></div>
+            <div class="service-card"><div class="service-icon">💻</div><h3>Logiciels</h3><p>Solutions personnalisées pour votre entreprise.</p><ul class="service-features"><li>Gestion sur mesure</li><li>Base de données</li><li>Formation incluse</li></ul><a href="devis.html" class="service-cta">Devis →</a></div>
+            <div class="service-card"><div class="service-icon">🎨</div><h3>Design</h3><p>Logos et identité visuelle qui marquent.</p><ul class="service-features"><li>Logo & charte</li><li>Réseaux sociaux</li><li>Branding complet</li></ul><a href="devis.html" class="service-cta">Devis →</a></div>
+            <div class="service-card"><div class="service-icon">🔧</div><h3>Maintenance</h3><p>Solutions toujours performantes.</p><ul class="service-features"><li>Mises à jour</li><li>Sécurité</li><li>Support 24/7</li></ul><a href="devis.html" class="service-cta">Devis →</a></div>
+        </div>
+        <div class="services-nav"><button id="prevBtn">←</button><button id="nextBtn">→</button></div>
+        <div class="services-dots" id="servicesDots"></div>
+    </div>
+</section>
+
+<section class="process-section" id="process">
+    <div class="section-header">
+        <div class="section-label">Comment nous travaillons</div>
+        <h2 class="section-title">Notre Processus</h2>
+        <div class="section-divider"></div>
+    </div>
+    <div class="process-timeline">
+        <div class="process-step"><div class="process-content"><h3>Consultation</h3><p>Nous écoutons vos besoins.</p></div><div class="process-number">1</div><div class="process-visual"><div class="process-visual-box">💬</div></div></div>
+        <div class="process-step"><div class="process-content"><h3>Conception</h3><p>Maquettes et prototypes.</p></div><div class="process-number">2</div><div class="process-visual"><div class="process-visual-box">✏️</div></div></div>
+        <div class="process-step"><div class="process-content"><h3>Développement</h3><p>Code avec les meilleures technos.</p></div><div class="process-number">3</div><div class="process-visual"><div class="process-visual-box">⚙️</div></div></div>
+        <div class="process-step"><div class="process-content"><h3>Lancement</h3><p>Mise en ligne et suivi.</p></div><div class="process-number">4</div><div class="process-visual"><div class="process-visual-box">🚀</div></div></div>
+    </div>
+</section>
+
+<section class="console-section" id="stats">
+    <div class="section-header">
+        <div class="section-label">En chiffres</div>
+        <h2 class="section-title">Nos Réalisations</h2>
+        <div class="section-divider"></div>
+    </div>
+    <div class="console-grid">
+        <div class="console-card"><div class="console-pulse"></div><div class="console-icon">🚀</div><div class="console-number" data-target="50">0</div><div class="console-label-text">Projets livrés</div></div>
+        <div class="console-card"><div class="console-pulse"></div><div class="console-icon">👥</div><div class="console-number" data-target="30">0</div><div class="console-label-text">Clients satisfaits</div></div>
+        <div class="console-card"><div class="console-pulse"></div><div class="console-icon">💻</div><div class="console-number" data-target="15">0</div><div class="console-label-text">Technologies</div></div>
+        <div class="console-card"><div class="console-pulse"></div><div class="console-icon">🌍</div><div class="console-number" data-target="5">0</div><div class="console-label-text">Pays</div></div>
+    </div>
+</section>
+
+<section class="contact-section" id="contact">
+    <div class="section-header">
+        <div class="section-label">Contactez-nous</div>
+        <h2 class="section-title">Lançons votre projet</h2>
+        <div class="section-divider"></div>
+    </div>
+    <div class="contact-container">
+        <div class="contact-info-grid">
+            <a href="mailto:afrinovatech46@gmail.com" class="contact-info-card"><div class="contact-icon">📧</div><h3>Email</h3><p>afrinovatech46@gmail.com</p></a>
+            <a href="tel:+22789434626" class="contact-info-card"><div class="contact-icon">📱</div><h3>Téléphone</h3><p>+227 89 43 46 26</p></a>
+            <a href="https://wa.me/22789434626" target="_blank" class="contact-info-card"><div class="contact-icon">💬</div><h3>WhatsApp</h3><p>Discussion instantanée</p></a>
+            <div class="contact-info-card"><div class="contact-icon">📍</div><h3>Localisation</h3><p>Agadez, Niger</p></div>
+        </div>
+        <form class="contact-form" id="contactForm">
+            <h3>Envoyez-nous un message</h3>
+            <div class="form-group"><label for="name">Nom complet</label><input type="text" id="name" required placeholder="Votre nom"></div>
+            <div class="form-group"><label for="email">Email</label><input type="email" id="email" required placeholder="votre@email.com"></div>
+            <div class="form-group"><label for="phone">Téléphone</label><input type="tel" id="phone" placeholder="+227 XX XX XX XX"></div>
+            <div class="form-group"><label for="service">Service souhaité</label><select id="service" required><option value="">Choisissez</option><option value="Site Web">Site Web</option><option value="App Mobile">App Mobile</option><option value="Logiciel">Logiciel</option><option value="Design">Design</option><option value="Maintenance">Maintenance</option></select></div>
+            <div class="form-group"><label for="message">Votre projet</label><textarea id="message" required placeholder="Décrivez votre projet..." rows="5"></textarea></div>
+            <button type="submit" class="btn-primary submit-btn"><span>Envoyer</span><span>→</span></button>
+        </form>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="footer-brand"><div class="footer-logo"><img src="assets/images/logo.png" alt="Logo"></div><div class="footer-brand-text"><div class="footer-brand-name">AFRINOVA</div><div class="footer-brand-sub">TECH</div></div></div>
+                <p class="footer-description">L'Afrique innove, le monde avance.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Liens rapides</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">→ Accueil</a></li>
+                    <li><a href="portfolio.html">→ Portfolio</a></li>
+                    <li><a href="galerie.html">→ Galerie</a></li>
+                    <li><a href="nouveautes-site.html">→ Nouveautés</a></li>
+                    <li><a href="devis.html">→ Devis</a></li>
+                    <li><a href="blog/index.html">→ Blog</a></li>
+                    <li><a href="admin/index.html">🔐 Admin</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <ul class="footer-contact">
+                    <li><a href="mailto:afrinovatech46@gmail.com">📧 afrinovatech46@gmail.com</a></li>
+                    <li><a href="tel:+22789434626">📱 +227 89 43 46 26</a></li>
+                    <li>📍 Agadez, Niger</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom"><p>© 2026 <span>Afrinova Tech</span>. Tous droits réservés.</p></div>
+    </div>
+</footer>
+
+<button class="back-to-top" id="backToTop">↑</button>
+
+<script src="assets/js/main.js"></script>
+<script src="assets/js/chatbot.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js').then(function(r) { console.log('✅ PWA OK'); }).catch(function(e) {});
+    });
+}
+</script>
+</body>
+</html>

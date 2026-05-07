@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galerie - Afrinova Tech</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📸</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/mobile.css">
+    <style>
+        .galerie-hero {
+            padding: 120px 20px 40px;
+            text-align: center;
+        }
+        .galerie-hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: #D4AF37;
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        .galerie-hero p {
+            color: #888;
+            font-size: 18px;
+        }
+        .galerie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .galerie-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            height: 280px;
+            border: 2px solid rgba(212,175,55,0.2);
+            transition: all 0.3s;
+        }
+        .galerie-item:hover {
+            transform: scale(1.03);
+            border-color: #D4AF37;
+            box-shadow: 0 10px 40px rgba(212,175,55,0.2);
+        }
+        .galerie-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .galerie-item .overlay {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.8);
+            padding: 15px;
+            color: #D4AF37;
+            font-weight: 600;
+        }
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+        .lightbox.active {
+            display: flex;
+        }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 85%;
+            border-radius: 10px;
+            border: 2px solid rgba(212,175,55,0.3);
+        }
+        .lightbox .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #D4AF37;
+            font-size: 50px;
+            cursor: pointer;
+            z-index: 10;
+        }
+        .lightbox .nav {
+            position: absolute;
+            top: 50%;
+            color: #D4AF37;
+            font-size: 60px;
+            cursor: pointer;
+            padding: 20px;
+            user-select: none;
+        }
+        .lightbox .prev { left: 10px; }
+        .lightbox .next { right: 10px; }
+        .lightbox .caption {
+            position: absolute;
+            bottom: 30px;
+            color: #fff;
+            font-size: 18px;
+            background: rgba(0,0,0,0.7);
+            padding: 10px 25px;
+            border-radius: 30px;
+        }
+        .empty-galerie {
+            text-align: center;
+            padding: 60px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar" id="navbar">
+    <a href="index.html" class="nav-logo">
+        <div class="nav-logo-icon"><img src="assets/images/logo.png" alt="Afrinova"></div>
+        <div class="nav-logo-text">AFRINOVA<span>TECH</span></div>
+    </a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="galerie.html" class="active">Galerie</a></li>
+        <li><a href="nouveautes-site.html">Nouveautés</a></li>
+        <li><a href="devis.html">Devis</a></li>
+        <li><a href="blog/index.html">Blog</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+        <li>
+            <select onchange="switchLanguage(this.value)" style="background:#111;color:#D4AF37;border:1px solid #D4AF37;padding:8px 12px;border-radius:8px;font-size:16px;cursor:pointer;">
+                <option value="fr">🇫🇷</option>
+                <option value="en">🇬🇧</option>
+                <option value="ha">🇳🇪</option>
+            </select>
+        </li>
+    </ul>
+    <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+</nav>
+
+<!-- Hero -->
+<div class="galerie-hero">
+    <h1>📸 Galerie Photos</h1>
+    <p>Nos réalisations en images</p>
+</div>
+
+<!-- Grille photos -->
+<div class="galerie-grid" id="galerieGrid">
+    <div class="empty-galerie">
+        <p>📭 Ajoutez des projets avec images depuis l'admin</p>
+        <a href="admin/projets.html" style="color:#D4AF37;">→ Gérer les projets</a>
+    </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+    <span class="close" onclick="closeLightbox()">✕</span>
+    <span class="nav prev" onclick="changeImage(-1)">❮</span>
+    <img id="lightboxImg" src="" alt="">
+    <span class="nav next" onclick="changeImage(1)">❯</span>
+    <span class="caption" id="lightboxCaption"></span>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-bottom">
+            <p>© 2026 <span>Afrinova Tech</span>. Agadez, Niger.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+<script src="assets/js/lang.js"></script>
+<script>
+// ============ CHARGER LES IMAGES ============
+var allImages = [];
+var currentImageIndex = 0;
+
+// Charger depuis les projets
+var projets = JSON.parse(localStorage.getItem('afrinova_projets') || '[]');
+projets.forEach(function(p) {
+    if (p.image) {
+        allImages.push({ src: p.image, caption: p.nom, categorie: p.categorie });
+    }
+});
+
+// Charger depuis les nouveautes
+var nouveautes = JSON.parse(localStorage.getItem('afrinova_nouveautes') || '[]');
+nouveautes.forEach(function(n) {
+    if (n.image) {
+        allImages.push({ src: n.image, caption: n.titre, categorie: n.categorie });
+    }
+});
+
+// Si aucune image, mettre des images par defaut
+if (allImages.length === 0) {
+    var couleurs = ['1a1a2e', '0f0f23', '1a1025', '0a1a1a', '1a1a0a', '2d1a3e'];
+    var emojis = ['🌐', '📱', '💻', '🎨', '🛒', '🔧'];
+    var noms = ['Site Web', 'App Mobile', 'Logiciel', 'Design', 'E-commerce', 'Maintenance'];
+    
+    for (var i = 0; i < 6; i++) {
+        allImages.push({
+            src: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300"><rect fill="#' + couleurs[i] + '" width="400" height="300"/><text fill="#D4AF37" x="200" y="140" text-anchor="middle" font-size="80">' + emojis[i] + '</text><text fill="#fff" x="200" y="200" text-anchor="middle" font-size="20">' + noms[i] + '</text></svg>'),
+            caption: noms[i],
+            categorie: 'demo'
+        });
+    }
+}
+
+// Afficher la galerie
+var grid = document.getElementById('galerieGrid');
+var html = '';
+
+allImages.forEach(function(img, index) {
+    html += '<div class="galerie-item" onclick="openLightbox(' + index + ')">';
+    html += '<img src="' + img.src + '" alt="' + img.caption + '" loading="lazy">';
+    html += '<div class="overlay">📸 ' + img.caption + '</div>';
+    html += '</div>';
+});
+
+grid.innerHTML = html;
+
+// ============ LIGHTBOX ============
+function openLightbox(index) {
+    currentImageIndex = index;
+    var lightbox = document.getElementById('lightbox');
+    var img = document.getElementById('lightboxImg');
+    var caption = document.getElementById('lightboxCaption');
+    
+    img.src = allImages[index].src;
+    caption.textContent = allImages[index].caption;
+    lightbox.classList.add('active');
+}
+
+function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+}
+
+function changeImage(direction) {
+    currentImageIndex += direction;
+    if (currentImageIndex < 0) currentImageIndex = allImages.length - 1;
+    if (currentImageIndex >= allImages.length) currentImageIndex = 0;
+    
+    document.getElementById('lightboxImg').src = allImages[currentImageIndex].src;
+    document.getElementById('lightboxCaption').textContent = allImages[currentImageIndex].caption;
+}
+
+// Navigation clavier
+document.addEventListener('keydown', function(e) {
+    var lightbox = document.getElementById('lightbox');
+    if (!lightbox.classList.contains('active')) return;
+    
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') changeImage(-1);
+    if (e.key === 'ArrowRight') changeImage(1);
+});
+
+// Fermer en cliquant en dehors de l'image
+document.getElementById('lightbox').addEventListener('click', function(e) {
+    if (e.target === this) closeLightbox();
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nouveautés - Afrinova Admin</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%230A0A0A'/><text x='32' y='44' font-family='Arial' font-size='40' font-weight='bold' fill='%23D4AF37' text-anchor='middle'>A</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --gold-dark: #B8860B;
+            --blue: #1E90FF;
+            --black: #0A0A0A;
+            --black-light: #111111;
+            --black-card: #161616;
+            --white: #FFFFFF;
+            --gray: #BBBBBB;
+            --green: #00FF88;
+            --red: #FF4444;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--black);
+            color: var(--white);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .admin-header h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--gold);
+            font-size: 1.8rem;
+        }
+        
+        .btn {
+            padding: 0.65rem 1.2rem;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-retour {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--gold);
+        }
+        
+        .btn-retour:hover {
+            background: rgba(212, 175, 55, 0.2);
+        }
+        
+        .btn-publier {
+            background: linear-gradient(135deg, var(--green), #00CC66);
+            color: var(--black);
+            font-weight: 700;
+        }
+        
+        .btn-publier:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.3);
+        }
+        
+        .btn-supprimer {
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid rgba(255, 68, 68, 0.3);
+            color: var(--red);
+            padding: 0.4rem 0.8rem;
+            font-size: 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .btn-supprimer:hover {
+            background: rgba(255, 68, 68, 0.2);
+        }
+        
+        .btn-modifier {
+            background: rgba(30, 144, 255, 0.1);
+            border: 1px solid rgba(30, 144, 255, 0.3);
+            color: var(--blue);
+            padding: 0.4rem 0.8rem;
+            font-size: 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .btn-modifier:hover {
+            background: rgba(30, 144, 255, 0.2);
+        }
+        
+        /* Formulaire */
+        .form-container {
+            background: var(--black-card);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: none;
+        }
+        
+        .form-container.active {
+            display: block;
+        }
+        
+        .form-container h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        
+        .form-group label {
+            display: block;
+            color: var(--gray);
+            font-size: 0.8rem;
+            margin-bottom: 0.4rem;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.7rem 0.9rem;
+            background: var(--black-light);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 10px;
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--gold);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .form-group select {
+            cursor: pointer;
+        }
+        
+        .image-upload-area {
+            background: var(--black-light);
+            border: 2px dashed rgba(212, 175, 55, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .image-upload-area:hover {
+            border-color: var(--gold);
+        }
+        
+        .image-upload-area .upload-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .image-upload-area p {
+            color: var(--gray);
+            font-size: 0.8rem;
+        }
+        
+        .image-upload-area input[type="file"] {
+            display: none;
+        }
+        
+        .image-preview {
+            width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+            border-radius: 10px;
+            margin-top: 1rem;
+            display: none;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .image-preview.active {
+            display: block;
+        }
+        
+        /* Grille nouveautés */
+        .nouveautes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.25rem;
+        }
+        
+        .nouveaute-card {
+            background: var(--black-card);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .nouveaute-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-3px);
+        }
+        
+        .nouveaute-image {
+            width: 100%;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+        }
+        
+        .nouveaute-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .nouveaute-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--black);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+        
+        .nouveaute-info {
+            padding: 1.25rem;
+        }
+        
+        .nouveaute-info h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--gold);
+            font-size: 1rem;
+            margin-bottom: 0.4rem;
+        }
+        
+        .nouveaute-client {
+            color: var(--blue);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .nouveaute-info p {
+            color: var(--gray);
+            font-size: 0.8rem;
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+        
+        .nouveaute-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .nouveaute-tag {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            color: var(--gold);
+            padding: 0.15rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.65rem;
+        }
+        
+        .nouveaute-date {
+            color: var(--gray);
+            font-size: 0.7rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .nouveaute-actions {
+            display: flex;
+            gap: 0.4rem;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--gray);
+            grid-column: 1 / -1;
+        }
+        
+        .empty-state .empty-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        /* Toggle switch */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--black-light);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 26px;
+            transition: 0.3s;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background: var(--gray);
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        
+        .toggle-switch input:checked + .toggle-slider {
+            background: rgba(0, 255, 136, 0.2);
+            border-color: var(--green);
+        }
+        
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+            background: var(--green);
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .nouveautes-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="admin-container">
+        
+        <div class="admin-header">
+            <h1>🆕 Nouveautés & Annonces</h1>
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <a href="index.html" class="btn btn-retour">← Dashboard</a>
+                <a href="../index.html" target="_blank" class="btn btn-retour">🌐 Site</a>
+                <button class="btn btn-publier" id="btnPublier">+ Nouvelle annonce</button>
+            </div>
+        </div>
+        
+        <!-- Formulaire -->
+        <div class="form-container" id="formContainer">
+            <h2 id="formTitle">📢 Publier une nouvelle annonce</h2>
+            
+            <form id="nouveauteForm">
+                <input type="hidden" id="nouveauteIndex" value="-1">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nouveauteTitre">Titre de l'annonce *</label>
+                        <input type="text" id="nouveauteTitre" required placeholder="Ex: Application Mobile Santé Plus">
+                    </div>
+                    <div class="form-group">
+                        <label for="nouveauteClient">Nom du client *</label>
+                        <input type="text" id="nouveauteClient" required placeholder="Ex: Dr Fatima H.">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nouveauteCategorie">Type de service *</label>
+                        <select id="nouveauteCategorie" required>
+                            <option value="">Choisir...</option>
+                            <option value="Site Web">Site Web</option>
+                            <option value="Application Mobile">Application Mobile</option>
+                            <option value="Logiciel">Logiciel d'entreprise</option>
+                            <option value="Design">Identité Visuelle</option>
+                            <option value="E-commerce">E-commerce</option>
+                            <option value="Maintenance">Maintenance</option>
+                            <option value="Autre">Autre service</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="nouveauteTechnologies">Technologies utilisées</label>
+                        <input type="text" id="nouveauteTechnologies" placeholder="Ex: Flutter, Firebase, API REST">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="nouveauteDescription">Description du projet *</label>
+                    <textarea id="nouveauteDescription" required placeholder="Décrivez ce que vous avez réalisé pour ce client...&#10;&#10;Ex: Nous avons créé une application mobile de suivi médical qui permet aux patients de..."></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nouveauteLien">Lien du projet (optionnel)</label>
+                        <input type="url" id="nouveauteLien" placeholder="https://...">
+                    </div>
+                    <div class="form-group">
+                        <label for="nouveauteDate">Date de réalisation</label>
+                        <input type="date" id="nouveauteDate">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Image du projet</label>
+                    <div class="image-upload-area" id="imageUploadArea">
+                        <div class="upload-icon">🖼️</div>
+                        <p>Cliquez pour ajouter une capture d'écran ou photo</p>
+                        <p style="font-size: 0.7rem; opacity: 0.7;">JPG, PNG, GIF - Max 5MB</p>
+                        <input type="file" id="nouveauteImage" accept="image/*">
+                    </div>
+                    <img id="imagePreview" class="image-preview" src="" alt="Aperçu">
+                </div>
+                
+                <div class="form-group">
+                    <label class="toggle-container">
+                        <span>Publier sur le site</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="nouveautePublie" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </label>
+                </div>
+                
+                <div style="display: flex; gap: 0.75rem;">
+                    <button type="submit" class="btn btn-publier" style="flex: 1;">📢 Publier l'annonce</button>
+                    <button type="button" class="btn btn-retour" id="btnAnnuler" style="flex: 1;">❌ Annuler</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Grille nouveautés -->
+        <div class="nouveautes-grid" id="nouveautesGrid">
+            <div class="empty-state">
+                <div class="empty-icon">📭</div>
+                <p>Aucune annonce pour le moment</p>
+                <p style="font-size: 0.8rem; margin-top: 0.5rem;">Cliquez sur "+ Nouvelle annonce" pour publier</p>
+            </div>
+        </div>
+        
+    </div>
+    
+    <script>
+        // Vérifier connexion
+        if (localStorage.getItem('afrinova_admin_logged') !== 'true') {
+            window.location.href = 'index.html';
+        }
+        
+        var nouveautes = JSON.parse(localStorage.getItem('afrinova_nouveautes') || '[]');
+        var formContainer = document.getElementById('formContainer');
+        var currentImageData = '';
+        
+        function afficherNouveautes() {
+            var grid = document.getElementById('nouveautesGrid');
+            
+            if (nouveautes.length === 0) {
+                grid.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><p>Aucune annonce pour le moment</p><p style="font-size: 0.8rem; margin-top: 0.5rem;">Cliquez sur "+ Nouvelle annonce" pour publier</p></div>';
+                return;
+            }
+            
+            // Trier par date (plus récent d'abord)
+            nouveautes.sort(function(a, b) {
+                return new Date(b.date) - new Date(a.date);
+            });
+            
+            var couleurs = {
+                'Site Web': 'linear-gradient(135deg, #1a1a2e, #16213e)',
+                'Application Mobile': 'linear-gradient(135deg, #0f0f23, #1a1a3e)',
+                'Logiciel': 'linear-gradient(135deg, #1a1a1a, #2d2d2d)',
+                'Design': 'linear-gradient(135deg, #1a1025, #2d1a3e)',
+                'E-commerce': 'linear-gradient(135deg, #0a1a1a, #1a2d2d)',
+                'Maintenance': 'linear-gradient(135deg, #1a1a0a, #2d2d1a)',
+                'Autre': 'linear-gradient(135deg, #1a1a2e, #16213e)'
+            };
+            
+            var emojis = {
+                'Site Web': '🌐',
+                'Application Mobile': '📱',
+                'Logiciel': '💻',
+                'Design': '🎨',
+                'E-commerce': '🛒',
+                'Maintenance': '🔧',
+                'Autre': '📦'
+            };
+            
+            var html = '';
+            nouveautes.forEach(function(item, index) {
+                var tagsHTML = '';
+                if (item.technologies) {
+                    item.technologies.split(',').forEach(function(t) {
+                        tagsHTML += '<span class="nouveaute-tag">' + escapeHTML(t.trim()) + '</span>';
+                    });
+                }
+                
+                var imageHTML = '';
+                if (item.image) {
+                    imageHTML = '<img src="' + item.image + '" alt="' + escapeHTML(item.titre) + '">';
+                } else {
+                    imageHTML = '<span style="font-size: 3rem;">' + (emojis[item.categorie] || '📦') + '</span>';
+                }
+                
+                var couleur = couleurs[item.categorie] || 'linear-gradient(135deg, #1a1a2e, #16213e)';
+                var statutBadge = item.publie ? '<span class="nouveaute-badge" style="background: var(--green);">🟢 Publié</span>' : '<span class="nouveaute-badge" style="background: var(--red);">🔴 Brouillon</span>';
+                
+                html += '<div class="nouveaute-card">';
+                html += '<div class="nouveaute-image" style="background: ' + couleur + ';">' + imageHTML + statutBadge + '</div>';
+                html += '<div class="nouveaute-info">';
+                html += '<h3>' + escapeHTML(item.titre) + '</h3>';
+                html += '<div class="nouveaute-client">👤 Client: ' + escapeHTML(item.client) + '</div>';
+                html += '<p>' + escapeHTML(item.description.substring(0, 100)) + '...</p>';
+                html += '<div class="nouveaute-tags">' + tagsHTML + '</div>';
+                html += '<div class="nouveaute-date">📅 ' + formatDate(item.date) + ' | 📁 ' + escapeHTML(item.categorie) + '</div>';
+                html += '<div class="nouveaute-actions">';
+                html += '<button class="btn-modifier" onclick="modifierNouveaute(' + index + ')">✏️ Modifier</button>';
+                html += '<button class="btn-supprimer" onclick="supprimerNouveaute(' + index + ')">🗑️</button>';
+                html += '</div>';
+                html += '</div></div>';
+            });
+            
+            grid.innerHTML = html;
+        }
+        
+        document.getElementById('nouveauteForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            var index = parseInt(document.getElementById('nouveauteIndex').value);
+            
+            var nouveaute = {
+                titre: document.getElementById('nouveauteTitre').value.trim(),
+                client: document.getElementById('nouveauteClient').value.trim(),
+                categorie: document.getElementById('nouveauteCategorie').value,
+                technologies: document.getElementById('nouveauteTechnologies').value.trim(),
+                description: document.getElementById('nouveauteDescription').value.trim(),
+                lien: document.getElementById('nouveauteLien').value.trim(),
+                date: document.getElementById('nouveauteDate').value || new Date().toISOString().split('T')[0],
+                image: currentImageData,
+                publie: document.getElementById('nouveautePublie').checked,
+                dateCreation: new Date().toISOString()
+            };
+            
+            if (index >= 0) {
+                nouveautes[index] = nouveaute;
+            } else {
+                nouveautes.push(nouveaute);
+            }
+            
+            localStorage.setItem('afrinova_nouveautes', JSON.stringify(nouveautes));
+            
+            // Reset
+            document.getElementById('nouveauteForm').reset();
+            document.getElementById('nouveauteIndex').value = '-1';
+            currentImageData = '';
+            document.getElementById('imagePreview').classList.remove('active');
+            document.getElementById('nouveautePublie').checked = true;
+            formContainer.classList.remove('active');
+            document.getElementById('formTitle').textContent = '📢 Publier une nouvelle annonce';
+            document.getElementById('btnPublier').style.display = '';
+            
+            afficherNouveautes();
+            alert('✅ Annonce enregistrée avec succès !');
+        });
+        
+        window.modifierNouveaute = function(index) {
+            var item = nouveautes[index];
+            
+            document.getElementById('nouveauteIndex').value = index;
+            document.getElementById('nouveauteTitre').value = item.titre;
+            document.getElementById('nouveauteClient').value = item.client;
+            document.getElementById('nouveauteCategorie').value = item.categorie;
+            document.getElementById('nouveauteTechnologies').value = item.technologies || '';
+            document.getElementById('nouveauteDescription').value = item.description;
+            document.getElementById('nouveauteLien').value = item.lien || '';
+            document.getElementById('nouveauteDate').value = item.date;
+            document.getElementById('nouveautePublie').checked = item.publie;
+            
+            currentImageData = item.image || '';
+            if (currentImageData) {
+                document.getElementById('imagePreview').src = currentImageData;
+                document.getElementById('imagePreview').classList.add('active');
+            } else {
+                document.getElementById('imagePreview').classList.remove('active');
+            }
+            
+            document.getElementById('formTitle').textContent = '✏️ Modifier l\'annonce';
+            formContainer.classList.add('active');
+            document.getElementById('btnPublier').style.display = 'none';
+            window.scrollTo({ top: formContainer.offsetTop - 50, behavior: 'smooth' });
+        };
+        
+        window.supprimerNouveaute = function(index) {
+            if (confirm('Supprimer cette annonce ?')) {
+                nouveautes.splice(index, 1);
+                localStorage.setItem('afrinova_nouveautes', JSON.stringify(nouveautes));
+                afficherNouveautes();
+            }
+        };
+        
+        document.getElementById('btnPublier').addEventListener('click', function() {
+            document.getElementById('nouveauteForm').reset();
+            document.getElementById('nouveauteIndex').value = '-1';
+            currentImageData = '';
+            document.getElementById('imagePreview').classList.remove('active');
+            document.getElementById('nouveautePublie').checked = true;
+            document.getElementById('formTitle').textContent = '📢 Publier une nouvelle annonce';
+            formContainer.classList.add('active');
+            document.getElementById('btnPublier').style.display = 'none';
+            window.scrollTo({ top: formContainer.offsetTop - 50, behavior: 'smooth' });
+        });
+        
+        document.getElementById('btnAnnuler').addEventListener('click', function() {
+            formContainer.classList.remove('active');
+            document.getElementById('btnPublier').style.display = '';
+            document.getElementById('nouveauteForm').reset();
+            currentImageData = '';
+            document.getElementById('imagePreview').classList.remove('active');
+        });
+        
+        document.getElementById('imageUploadArea').addEventListener('click', function() {
+            document.getElementById('nouveauteImage').click();
+        });
+        
+        document.getElementById('nouveauteImage').addEventListener('change', function(e) {
+            var file = e.target.files[0];
+            if (file) {
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('❌ Image trop grande ! Max 5MB.');
+                    return;
+                }
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                    currentImageData = event.target.result;
+                    document.getElementById('imagePreview').src = currentImageData;
+                    document.getElementById('imagePreview').classList.add('active');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        function formatDate(dateStr) {
+            var date = new Date(dateStr);
+            var options = { day: 'numeric', month: 'long', year: 'numeric' };
+            return date.toLocaleDateString('fr-FR', options);
+        }
+        
+        function escapeHTML(text) {
+            var div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        afficherNouveautes();
+    </script>
+</body>
+</html>

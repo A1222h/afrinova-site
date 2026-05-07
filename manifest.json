@@ -1,0 +1,29 @@
+{
+    "name": "Afrinova Tech - Solutions Digitales",
+    "short_name": "Afrinova",
+    "description": "L'Afrique innove, le monde avance. Solutions digitales sur mesure : sites web, apps, logiciels, design.",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "background_color": "#0A0A0A",
+    "theme_color": "#D4AF37",
+    "orientation": "any",
+    "lang": "fr",
+    "dir": "ltr",
+    "icons": [
+        {
+            "src": "assets/images/logo.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "assets/images/logo.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": ["business", "technology", "productivity"],
+    "prefer_related_applications": false
+}

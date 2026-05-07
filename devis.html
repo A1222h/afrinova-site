@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devis Instantané - Afrinova Tech</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/devis.css">
+</head>
+<body>
+    
+    <div class="particles-container" id="particles"></div>
+    
+    <nav class="navbar" id="navbar">
+        <a href="index.html" class="nav-logo">
+            <div class="nav-logo-icon">
+                <img src="assets/images/logo.png" alt="Afrinova Tech">
+            </div>
+            <div class="nav-logo-text">AFRINOVA<span>TECH</span></div>
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="portfolio.html">Portfolio</a></li>
+            <li><a href="devis.html" class="active">Devis</a></li>
+            <li><a href="blog/index.html">Blog</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+    </nav>
+    
+    <section class="devis-hero">
+        <h1>Calculateur de Devis</h1>
+        <p>Obtenez une estimation instantanée pour votre projet</p>
+    </section>
+    
+    <section class="devis-container">
+        <form id="devisForm" class="devis-form">
+            
+            <!-- Type de projet -->
+            <div class="devis-section">
+                <h3>1. Type de projet</h3>
+                <div class="project-types">
+                    <label class="project-type-card">
+                        <input type="radio" name="projectType" value="site" data-price="200000">
+                        <span class="type-icon">🌐</span>
+                        <span class="type-name">Site Web</span>
+                        <span class="type-price">À partir de 200 000 F</span>
+                    </label>
+                    
+                    <label class="project-type-card">
+                        <input type="radio" name="projectType" value="ecommerce" data-price="500000">
+                        <span class="type-icon">🛒</span>
+                        <span class="type-name">E-commerce</span>
+                        <span class="type-price">À partir de 500 000 F</span>
+                    </label>
+                    
+                    <label class="project-type-card">
+                        <input type="radio" name="projectType" value="app" data-price="800000">
+                        <span class="type-icon">📱</span>
+                        <span class="type-name">App Mobile</span>
+                        <span class="type-price">À partir de 800 000 F</span>
+                    </label>
+                    
+                    <label class="project-type-card">
+                        <input type="radio" name="projectType" value="software" data-price="1000000">
+                        <span class="type-icon">💻</span>
+                        <span class="type-name">Logiciel</span>
+                        <span class="type-price">À partir de 1 000 000 F</span>
+                    </label>
+                    
+                    <label class="project-type-card">
+                        <input type="radio" name="projectType" value="design" data-price="150000">
+                        <span class="type-icon">🎨</span>
+                        <span class="type-name">Design</span>
+                        <span class="type-price">À partir de 150 000 F</span>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Options supplémentaires -->
+            <div class="devis-section">
+                <h3>2. Options supplémentaires</h3>
+                <div class="options-grid">
+                    <label class="option-checkbox">
+                        <input type="checkbox" name="options" value="seo" data-price="100000">
+                        <span>Référencement SEO (+100 000 F)</span>
+                    </label>
+                    
+                    <label class="option-checkbox">
+                        <input type="checkbox" name="options" value="hosting" data-price="50000">
+                        <span>Hébergement 1 an (+50 000 F)</span>
+                    </label>
+                    
+                    <label class="option-checkbox">
+                        <input type="checkbox" name="options" value="domain" data-price="25000">
+                        <span>Nom de domaine (+25 000 F)</span>
+                    </label>
+                    
+                    <label class="option-checkbox">
+                        <input type="checkbox" name="options" value="maintenance" data-price="300000">
+                        <span>Maintenance annuelle (+300 000 F)</span>
+                    </label>
+                    
+                    <label class="option-checkbox">
+                        <input type="checkbox" name="options" value="formation" data-price="150000">
+                        <span>Formation équipe (+150 000 F)</span>
+                    </label>
+                    
+                    <label class="option-checkbox">
+                        <input type="checkbox" name="options" value="content" data-price="200000">
+                        <span>Rédaction contenu (+200 000 F)</span>
+                    </label>
+                    
+                    <label class="option-checkbox">
+                        <input type="checkbox" name="options" value="social" data-price="100000">
+                        <span>Intégration réseaux sociaux (+100 000 F)</span>
+                    </label>
+                    
+                    <label class="option-checkbox">
+                        <input type="checkbox" name="options" value="analytics" data-price="50000">
+                        <span>Analytics avancé (+50 000 F)</span>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Pages (pour sites web) -->
+            <div class="devis-section" id="pagesSection" style="display:none;">
+                <h3>3. Nombre de pages</h3>
+                <div class="pages-selector">
+                    <label>
+                        Pages :
+                        <input type="range" id="pagesSlider" min="1" max="20" value="5" step="1">
+                        <span id="pagesValue">5</span> pages
+                    </label>
+                    <small>Prix par page supplémentaire : 50 000 F</small>
+                </div>
+            </div>
+            
+            <!-- Récapitulatif -->
+            <div class="devis-recap" id="devisRecap">
+                <h3>💰 Récapitulatif</h3>
+                <div class="recap-line">
+                    <span>Prix de base</span>
+                    <span id="basePrice">0 F</span>
+                </div>
+                <div class="recap-line" id="optionsRecap" style="display:none;">
+                    <span>Options</span>
+                    <span id="optionsPrice">0 F</span>
+                </div>
+                <div class="recap-line" id="pagesRecap" style="display:none;">
+                    <span>Pages supplémentaires</span>
+                    <span id="pagesPrice">0 F</span>
+                </div>
+                <div class="recap-total">
+                    <span>TOTAL ESTIMÉ</span>
+                    <span id="totalPrice">0 F</span>
+                </div>
+                <small style="color: var(--gray); display: block; margin-top: 1rem;">
+                    * Prix indicatif, devis final après consultation
+                </small>
+            </div>
+            
+            <!-- Informations contact -->
+            <div class="devis-section">
+                <h3>4. Vos informations</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="devisName">Nom complet *</label>
+                        <input type="text" id="devisName" required placeholder="Votre nom">
+                    </div>
+                    <div class="form-group">
+                        <label for="devisEmail">Email *</label>
+                        <input type="email" id="devisEmail" required placeholder="votre@email.com">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="devisPhone">Téléphone</label>
+                        <input type="tel" id="devisPhone" placeholder="+227 XX XX XX XX">
+                    </div>
+                    <div class="form-group">
+                        <label for="devisCompany">Entreprise</label>
+                        <input type="text" id="devisCompany" placeholder="Votre entreprise">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="devisMessage">Description du projet</label>
+                    <textarea id="devisMessage" rows="4" placeholder="Décrivez votre projet en quelques phrases..."></textarea>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn-primary" style="width:100%; justify-content:center; font-size:1.1rem; padding:1.2rem;">
+                <span>Recevoir mon devis détaillé</span>
+                <span>→</span>
+            </button>
+        </form>
+    </section>
+    
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-brand">
+                        <div class="footer-logo"><img src="assets/images/logo.png" alt="Afrinova Tech"></div>
+                        <div class="footer-brand-text">
+                            <div class="footer-brand-name">AFRINOVA</div>
+                            <div class="footer-brand-sub">TECH</div>
+                        </div>
+                    </div>
+                    <p class="footer-description">L'Afrique innove, le monde avance.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul class="footer-contact">
+                        <li><a href="mailto:afrinovatech46@gmail.com">📧 afrinovatech46@gmail.com</a></li>
+                        <li><a href="tel:+22789434626">📱 +227 89 43 46 26</a></li>
+                        <li>📍 Agadez, Niger</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 <span>Afrinova Tech</span>. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <button class="back-to-top" id="backToTop">↑</button>
+    
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/devis.js"></script>
+</body>
+</html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nouveautés - Afrinova Tech</title>
+    <meta name="description" content="Découvrez nos dernières réalisations et projets livrés à nos clients.">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%230A0A0A'/><text x='32' y='44' font-family='Arial' font-size='40' font-weight='bold' fill='%23D4AF37' text-anchor='middle'>A</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .nouveautes-hero {
+            min-height: 40vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+            background: linear-gradient(180deg, rgba(212, 175, 55, 0.05) 0%, transparent 100%);
+        }
+        
+        .nouveautes-hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+        
+        .nouveautes-hero p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            max-width: 600px;
+        }
+        
+        .nouveautes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .nouveaute-card {
+            background: var(--black-card);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s;
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+        
+        .nouveaute-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .nouveaute-image {
+            width: 100%;
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+        }
+        
+        .nouveaute-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .nouveaute-badge-new {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: linear-gradient(135deg, #FF4444, #FF6666);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            animation: pulse 2s infinite;
+        }
+        
+        .nouveaute-content {
+            padding: 2rem;
+        }
+        
+        .nouveaute-content h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+        
+        .nouveaute-client {
+            color: var(--blue);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .nouveaute-content p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+        
+        .nouveaute-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .nouveaute-tag {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            color: var(--gold);
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+        }
+        
+        .nouveaute-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+        }
+        
+        .nouveaute-date {
+            color: var(--gray);
+            font-size: 0.8rem;
+        }
+        
+        .nouveaute-lien {
+            background: var(--blue-dark);
+            color: var(--white);
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+        
+        .nouveaute-lien:hover {
+            background: var(--blue);
+            transform: scale(1.05);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--gray);
+            grid-column: 1 / -1;
+        }
+        
+        .empty-state .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            color: var(--blue);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+        
+        .section-divider {
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--blue));
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+        
+        @media (max-width: 768px) {
+            .nouveautes-grid {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="particles-container" id="particles"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <a href="index.html" class="nav-logo">
+            <div class="nav-logo-icon"><img src="assets/images/logo.png" alt="Afrinova Tech"></div>
+            <div class="nav-logo-text">AFRINOVA<span>TECH</span></div>
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="portfolio.html">Portfolio</a></li>
+            <li><a href="nouveautes-site.html" class="active">Nouveautés</a></li>
+            <li><a href="devis.html">Devis</a></li>
+            <li><a href="blog/index.html">Blog</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+    </nav>
+    
+    <!-- Hero -->
+    <section class="nouveautes-hero">
+        <h1>🆕 Nos Nouveautés</h1>
+        <p>Découvrez nos dernières réalisations fraîchement livrées à nos clients</p>
+    </section>
+    
+    <!-- Section Nouveautés -->
+    <section>
+        <div class="section-header">
+            <div class="section-label">Dernières créations</div>
+            <h2 class="section-title">Ce que nous venons de livrer</h2>
+            <div class="section-divider"></div>
+        </div>
+        
+        <div class="nouveautes-grid" id="nouveautesGrid">
+            <div class="empty-state">
+                <div class="empty-icon">📭</div>
+                <p>Aucune nouveauté pour le moment</p>
+                <p style="margin-top: 0.5rem;">Revenez bientôt pour découvrir nos nouveaux projets !</p>
+                <a href="devis.html" class="btn-primary" style="display: inline-flex; margin-top: 1.5rem;">
+                    <span>Démarrer votre projet</span>
+                    <span>→</span>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-brand">
+                        <div class="footer-logo"><img src="assets/images/logo.png" alt="Afrinova Tech"></div>
+                        <div class="footer-brand-text"><div class="footer-brand-name">AFRINOVA</div><div class="footer-brand-sub">TECH</div></div>
+                    </div>
+                    <p class="footer-description">L'Afrique innove, le monde avance. Solutions digitales sur mesure.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Liens rapides</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">→ Accueil</a></li>
+                        <li><a href="portfolio.html">→ Portfolio</a></li>
+                        <li><a href="nouveautes-site.html">→ Nouveautés</a></li>
+                        <li><a href="devis.html">→ Devis</a></li>
+                        <li><a href="blog/index.html">→ Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul class="footer-contact">
+                        <li><a href="mailto:afrinovatech46@gmail.com">📧 afrinovatech46@gmail.com</a></li>
+                        <li><a href="tel:+22789434626">📱 +227 89 43 46 26</a></li>
+                        <li>📍 Agadez, Niger</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 <span>Afrinova Tech</span>. Tous droits réservés. L'Afrique innove, le monde avance.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <button class="back-to-top" id="backToTop">↑</button>
+    
+    <script src="assets/js/main.js"></script>
+    <script>
+        // Charger les nouveautés depuis l'admin
+        var nouveautes = JSON.parse(localStorage.getItem('afrinova_nouveautes') || '[]');
+        var grid = document.getElementById('nouveautesGrid');
+        
+        if (nouveautes.length > 0) {
+            var couleurs = {
+                'Site Web': 'linear-gradient(135deg, #1a1a2e, #16213e)',
+                'Application Mobile': 'linear-gradient(135deg, #0f0f23, #1a1a3e)',
+                'Logiciel': 'linear-gradient(135deg, #1a1a1a, #2d2d2d)',
+                'Design': 'linear-gradient(135deg, #1a1025, #2d1a3e)',
+                'E-commerce': 'linear-gradient(135deg, #0a1a1a, #1a2d2d)',
+                'Maintenance': 'linear-gradient(135deg, #1a1a0a, #2d2d1a)',
+                'Autre': 'linear-gradient(135deg, #1a1a2e, #16213e)'
+            };
+            
+            // Filtrer seulement les annonces publiées
+            var annoncesPubliees = nouveautes.filter(function(n) { return n.publie; });
+            
+            if (annoncesPubliees.length === 0) {
+                grid.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><p>Aucune annonce publiée pour le moment</p></div>';
+            } else {
+                var html = '';
+                annoncesPubliees.forEach(function(item, index) {
+                    var tagsHTML = '';
+                    if (item.technologies) {
+                        item.technologies.split(',').forEach(function(t) {
+                            tagsHTML += '<span class="nouveaute-tag">' + t.trim() + '</span>';
+                        });
+                    }
+                    
+                    var imageHTML = '';
+                    if (item.image) {
+                        imageHTML = '<img src="' + item.image + '" alt="' + item.titre + '">';
+                    } else {
+                        var emojis = {
+                            'Site Web': '🌐', 'Application Mobile': '📱', 'Logiciel': '💻',
+                            'Design': '🎨', 'E-commerce': '🛒', 'Maintenance': '🔧', 'Autre': '📦'
+                        };
+                        imageHTML = '<span style="font-size: 4rem;">' + (emojis[item.categorie] || '📦') + '</span>';
+                    }
+                    
+                    var couleur = couleurs[item.categorie] || 'linear-gradient(135deg, #1a1a2e, #16213e)';
+                    
+                    html += '<div class="nouveaute-card" style="animation-delay: ' + (index * 0.15) + 's;">';
+                    html += '<div class="nouveaute-image" style="background: ' + couleur + ';">' + imageHTML + '<span class="nouveaute-badge-new">NOUVEAU</span></div>';
+                    html += '<div class="nouveaute-content">';
+                    html += '<h3>' + item.titre + '</h3>';
+                    html += '<div class="nouveaute-client">👤 ' + item.client + '</div>';
+                    html += '<p>' + item.description + '</p>';
+                    html += '<div class="nouveaute-tags">' + tagsHTML + '</div>';
+                    html += '<div class="nouveaute-footer">';
+                    html += '<span class="nouveaute-date">📅 ' + formatDate(item.date) + '</span>';
+                    if (item.lien) {
+                        html += '<a href="' + item.lien + '" class="nouveaute-lien" target="_blank">🔗 Voir le projet</a>';
+                    }
+                    html += '</div>';
+                    html += '</div></div>';
+                });
+                
+                grid.innerHTML = html;
+                
+                // Animation
+                setTimeout(function() {
+                    document.querySelectorAll('.nouveaute-card').forEach(function(card) {
+                        card.style.opacity = '1';
+                    });
+                }, 100);
+            }
+        }
+        
+        function formatDate(dateStr) {
+            var date = new Date(dateStr);
+            var options = { day: 'numeric', month: 'long', year: 'numeric' };
+            return date.toLocaleDateString('fr-FR', options);
+        }
+    </script>
+    
+</body>
+</html>

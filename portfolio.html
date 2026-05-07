@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Afrinova Tech</title>
+    <meta name="description" content="Découvrez nos réalisations : sites web, applications mobiles, logiciels et designs créés par Afrinova Tech.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/portfolio.css">
+</head>
+<body>
+    
+    <div class="particles-container" id="particles"></div>
+    
+    <!-- Navigation identique -->
+    <nav class="navbar" id="navbar">
+        <a href="index.html" class="nav-logo">
+            <div class="nav-logo-icon">
+                <img src="assets/images/logo.png" alt="Afrinova Tech">
+            </div>
+            <div class="nav-logo-text">
+                AFRINOVA
+                <span>TECH</span>
+            </div>
+        </a>
+        
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="portfolio.html" class="active">Portfolio</a></li>
+            <li><a href="blog/index.html">Blog</a></li>
+            <li><a href="devis.html">Devis</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        
+        <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+    </nav>
+    
+    <!-- Hero Portfolio -->
+    <section class="portfolio-hero">
+        <h1>Notre Portfolio</h1>
+        <p>Découvrez comment nous transformons les idées en solutions digitales</p>
+    </section>
+    
+    <!-- Filtres -->
+    <section class="portfolio-filters">
+        <button class="filter-btn active" data-filter="all">Tous</button>
+        <button class="filter-btn" data-filter="web">Sites Web</button>
+        <button class="filter-btn" data-filter="app">Apps Mobiles</button>
+        <button class="filter-btn" data-filter="software">Logiciels</button>
+        <button class="filter-btn" data-filter="design">Design</button>
+        <button class="filter-btn" data-filter="ecommerce">E-commerce</button>
+    </section>
+    
+    <!-- Grille Portfolio -->
+    <section class="portfolio-grid" id="portfolioGrid">
+        
+        <!-- Projet 1 -->
+        <div class="portfolio-item" data-category="web" data-aos="fade-up">
+            <div class="portfolio-image">
+                <div class="portfolio-placeholder" style="background: linear-gradient(135deg, #FF6B6B, #FF8E53);">
+                    <span>🌐</span>
+                </div>
+                <div class="portfolio-overlay">
+                    <h3>Espace Culturel Agadez</h3>
+                    <p>Site vitrine pour le centre culturel</p>
+                    <div class="portfolio-tech">
+                        <span>HTML5</span>
+                        <span>CSS3</span>
+                        <span>JavaScript</span>
+                        <span>Responsive</span>
+                    </div>
+                    <div class="portfolio-links">
+                        <a href="#" class="btn-view">👁️ Détails</a>
+                        <a href="#" class="btn-live">🔗 Visiter</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Projet 2 -->
+        <div class="portfolio-item" data-category="ecommerce web" data-aos="fade-up" data-aos-delay="100">
+            <div class="portfolio-image">
+                <div class="portfolio-placeholder" style="background: linear-gradient(135deg, #4ECDC4, #44B09E);">
+                    <span>🛒</span>
+                </div>
+                <div class="portfolio-overlay">
+                    <h3>Sahel Market</h3>
+                    <p>Plateforme e-commerce artisanat local</p>
+                    <div class="portfolio-tech">
+                        <span>React</span>
+                        <span>Node.js</span>
+                        <span>MongoDB</span>
+                        <span>Paiement</span>
+                    </div>
+                    <div class="portfolio-links">
+                        <a href="#" class="btn-view">👁️ Détails</a>
+                        <a href="#" class="btn-live">🔗 Visiter</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Projet 3 -->
+        <div class="portfolio-item" data-category="app" data-aos="fade-up" data-aos-delay="200">
+            <div class="portfolio-image">
+                <div class="portfolio-placeholder" style="background: linear-gradient(135deg, #667EEA, #764BA2);">
+                    <span>📱</span>
+                </div>
+                <div class="portfolio-overlay">
+                    <h3>Santé Plus</h3>
+                    <p>Application de suivi médical</p>
+                    <div class="portfolio-tech">
+                        <span>Flutter</span>
+                        <span>Firebase</span>
+                        <span>API REST</span>
+                        <span>iOS/Android</span>
+                    </div>
+                    <div class="portfolio-links">
+                        <a href="#" class="btn-view">👁️ Détails</a>
+                        <a href="#" class="btn-live">🔗 Voir</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Projet 4 -->
+        <div class="portfolio-item" data-category="software" data-aos="fade-up" data-aos-delay="300">
+            <div class="portfolio-image">
+                <div class="portfolio-placeholder" style="background: linear-gradient(135deg, #F093FB, #F5576C);">
+                    <span>💻</span>
+                </div>
+                <div class="portfolio-overlay">
+                    <h3>Gestion École</h3>
+                    <p>Logiciel de gestion scolaire complet</p>
+                    <div class="portfolio-tech">
+                        <span>Python</span>
+                        <span>Django</span>
+                        <span>PostgreSQL</span>
+                        <span>REST API</span>
+                    </div>
+                    <div class="portfolio-links">
+                        <a href="#" class="btn-view">👁️ Détails</a>
+                        <a href="#" class="btn-live">🔗 Démo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Projet 5 -->
+        <div class="portfolio-item" data-category="design" data-aos="fade-up" data-aos-delay="400">
+            <div class="portfolio-image">
+                <div class="portfolio-placeholder" style="background: linear-gradient(135deg, #FA709A, #FEE140);">
+                    <span>🎨</span>
+                </div>
+                <div class="portfolio-overlay">
+                    <h3>Branding Restaurant</h3>
+                    <p>Identité visuelle complète</p>
+                    <div class="portfolio-tech">
+                        <span>Logo</span>
+                        <span>Charte</span>
+                        <span>Menu</span>
+                        <span>Réseaux</span>
+                    </div>
+                    <div class="portfolio-links">
+                        <a href="#" class="btn-view">👁️ Détails</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Projet 6 -->
+        <div class="portfolio-item" data-category="web ecommerce" data-aos="fade-up" data-aos-delay="500">
+            <div class="portfolio-image">
+                <div class="portfolio-placeholder" style="background: linear-gradient(135deg, #A8E6CF, #DCEDC1);">
+                    <span>🏪</span>
+                </div>
+                <div class="portfolio-overlay">
+                    <h3>Boutique Artisanat</h3>
+                    <p>Site e-commerce artisanal</p>
+                    <div class="portfolio-tech">
+                        <span>WordPress</span>
+                        <span>WooCommerce</span>
+                        <span>SEO</span>
+                        <span>Blog</span>
+                    </div>
+                    <div class="portfolio-links">
+                        <a href="#" class="btn-view">👁️ Détails</a>
+                        <a href="#" class="btn-live">🔗 Visiter</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </section>
+    
+    <!-- Témoignages -->
+    <section class="testimonials">
+        <div class="section-header">
+            <div class="section-label">Ils nous font confiance</div>
+            <h2 class="section-title">Témoignages</h2>
+            <div class="section-divider"></div>
+        </div>
+        
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                <p>"Afrinova Tech a créé notre site e-commerce. Résultat exceptionnel, nos ventes ont triplé !"</p>
+                <div class="testimonial-author">
+                    <strong>Amadou I.</strong>
+                    <span>Sahel Market</span>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                <p>"Application mobile parfaitement conçue, interface intuitive et support réactif."</p>
+                <div class="testimonial-author">
+                    <strong>Dr Fatima H.</strong>
+                    <span>Santé Plus</span>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                <p>"Logiciel de gestion qui a révolutionné notre école. Formation incluse au top !"</p>
+                <div class="testimonial-author">
+                    <strong>Moussa K.</strong>
+                    <span>Directeur d'école</span>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                <p>"Design moderne et identité visuelle qui reflète parfaitement notre marque."</p>
+                <div class="testimonial-author">
+                    <strong>Aïcha M.</strong>
+                    <span>Restaurant Le Sahel</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA -->
+    <section class="portfolio-cta">
+        <h2>Vous avez un projet ?</h2>
+        <p>Transformons ensemble votre idée en réalité</p>
+        <a href="devis.html" class="btn-primary">
+            <span>Demander un devis gratuit</span>
+            <span>→</span>
+        </a>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-brand">
+                        <div class="footer-logo">
+                            <img src="assets/images/logo.png" alt="Afrinova Tech">
+                        </div>
+                        <div class="footer-brand-text">
+                            <div class="footer-brand-name">AFRINOVA</div>
+                            <div class="footer-brand-sub">TECH</div>
+                        </div>
+                    </div>
+                    <p class="footer-description">
+                        L'Afrique innove, le monde avance. Solutions digitales sur mesure.
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <h4>Liens rapides</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">→ Accueil</a></li>
+                        <li><a href="portfolio.html">→ Portfolio</a></li>
+                        <li><a href="devis.html">→ Devis</a></li>
+                        <li><a href="blog/index.html">→ Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul class="footer-contact">
+                        <li><a href="mailto:afrinovatech46@gmail.com">📧 afrinovatech46@gmail.com</a></li>
+                        <li><a href="tel:+22789434626">📱 +227 89 43 46 26</a></li>
+                        <li>📍 Agadez, Niger</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 <span>Afrinova Tech</span>. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <button class="back-to-top" id="backToTop">↑</button>
+    
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/portfolio.js"></script>
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Afrinova</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0A0A0A;color:#fff;font-family:Arial;padding:15px}
+h1{color:#D4AF37;font-size:22px;text-align:center;margin:10px 0}
+h2{color:#D4AF37;font-size:18px;margin:15px 0 10px}
+.login-box{max-width:350px;margin:50px auto;background:#161616;padding:25px;border-radius:15px;text-align:center}
+.login-box input{width:100%;padding:12px;margin:8px 0;background:#111;border:1px solid #333;color:#fff;border-radius:8px;font-size:16px}
+.login-box button{width:100%;padding:12px;background:#D4AF37;color:#000;border:none;border-radius:8px;font-weight:bold;font-size:16px;cursor:pointer;margin-top:10px}
+.grid{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}
+.card{background:#161616;padding:15px;border-radius:10px;text-align:center;border:1px solid #333;text-decoration:none;color:#fff;flex:1;min-width:100px;max-width:150px}
+.card:hover{border-color:#D4AF37}
+.card .icon{font-size:30px}
+.card .title{color:#D4AF37;font-size:13px;font-weight:bold;margin:5px 0}
+.card .sub{color:#888;font-size:11px}
+.tabs{display:flex;gap:5px;margin:15px 0;flex-wrap:wrap}
+.tab{flex:1;padding:10px;background:#161616;border:1px solid #333;color:#fff;text-align:center;cursor:pointer;border-radius:8px;font-size:13px;min-width:80px}
+.tab.active{background:#D4AF37;color:#000;font-weight:bold}
+.tab-content{display:none;background:#161616;padding:15px;border-radius:10px;margin:10px 0}
+.tab-content.active{display:block}
+input,select,textarea{width:100%;padding:10px;margin:5px 0;background:#111;border:1px solid #333;color:#fff;border-radius:6px;font-size:14px}
+textarea{height:100px;resize:vertical}
+.btn{width:100%;padding:12px;background:#D4AF37;color:#000;border:none;border-radius:8px;font-weight:bold;cursor:pointer;margin:5px 0;font-size:14px}
+.btn-red{background:#FF4444;color:#fff}
+.btn-blue{background:#1E90FF;color:#fff}
+.btn-green{background:#00CC66;color:#000}
+.btn-outline{background:transparent;border:1px solid #D4AF37;color:#D4AF37}
+.item{background:#111;border:1px solid #333;border-radius:10px;padding:12px;margin:8px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.item-info{flex:1;min-width:150px}
+.item-info strong{color:#D4AF37;font-size:14px}
+.item-info p{color:#888;font-size:12px;margin-top:3px}
+.item-actions{display:flex;gap:5px}
+.item-actions button{padding:6px 10px;border-radius:5px;border:none;cursor:pointer;font-size:11px;font-weight:bold}
+.upload-area{border:2px dashed #444;padding:20px;text-align:center;border-radius:10px;cursor:pointer;margin:10px 0}
+.upload-area:hover{border-color:#D4AF37}
+.preview{max-width:100%;max-height:150px;border-radius:8px;margin-top:8px;display:none}
+.badge{display:inline-block;padding:3px 8px;border-radius:10px;font-size:10px;margin:2px}
+.badge-yes{background:rgba(0,255,136,0.2);color:#0f0}
+.badge-no{background:rgba(255,68,68,0.2);color:#f44}
+.logout-btn{position:fixed;top:10px;right:10px;background:red;color:#fff;border:none;padding:8px 15px;border-radius:5px;font-weight:bold;cursor:pointer;z-index:100}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginPage">
+<div class="login-box">
+<h1>🔐 Admin Afrinova</h1>
+<input type="text" id="user" placeholder="Utilisateur">
+<input type="password" id="pass" placeholder="Mot de passe">
+<button onclick="login()">Se connecter</button>
+</div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" style="display:none">
+<button class="logout-btn" onclick="logout()">✕ Déconnexion</button>
+<h1>📊 Gestion Afrinova</h1>
+
+<!-- Menu rapide -->
+<div class="grid">
+<a href="../index.html" target="_blank" class="card"><div class="icon">🌐</div><div class="title">Site</div><div class="sub">Accueil</div></a>
+<a href="../galerie.html" target="_blank" class="card"><div class="icon">📸</div><div class="title">Galerie</div><div class="sub">Photos</div></a>
+<a href="../blog/index.html" target="_blank" class="card"><div class="icon">📰</div><div class="title">Blog</div><div class="sub">Public</div></a>
+<a href="../devis.html" target="_blank" class="card"><div class="icon">💰</div><div class="title">Devis</div><div class="sub">Prix</div></a>
+</div>
+
+<!-- Onglets -->
+<div class="tabs">
+<div class="tab active" onclick="showTab('projets')">📂 Projets</div>
+<div class="tab" onclick="showTab('nouveautes')">🆕 Annonces</div>
+<div class="tab" onclick="showTab('blog')">📝 Articles</div>
+<div class="tab" onclick="showTab('messages')">📩 Messages</div>
+</div>
+
+<!-- PROJETS -->
+<div id="tab-projets" class="tab-content active">
+<h2>📂 Projets Portfolio</h2>
+<button class="btn" onclick="showForm('projet')">+ Ajouter un projet</button>
+<div id="form-projet" style="display:none">
+<input type="hidden" id="projet-index" value="-1">
+<input type="text" id="projet-nom" placeholder="Nom du projet">
+<select id="projet-cat"><option value="">Catégorie</option><option value="web">Web</option><option value="app">App</option><option value="design">Design</option><option value="ecommerce">E-commerce</option><option value="other">Autre</option></select>
+<input type="text" id="projet-tech" placeholder="Technologies (HTML, CSS...)">
+<input type="text" id="projet-lien" placeholder="Lien du projet (optionnel)">
+<textarea id="projet-desc" placeholder="Description"></textarea>
+<div class="upload-area" onclick="document.getElementById('projet-img-input').click()">🖼️ Cliquer pour ajouter une image</div>
+<input type="file" id="projet-img-input" accept="image/*" style="display:none" onchange="previewImage(this,'projet-preview')">
+<img id="projet-preview" class="preview">
+<button class="btn btn-green" onclick="saveProjet()">💾 Enregistrer</button>
+<button class="btn btn-outline" onclick="hideForm('projet')">Annuler</button>
+</div>
+<div id="projets-list"></div>
+</div>
+
+<!-- NOUVEAUTÉS -->
+<div id="tab-nouveautes" class="tab-content">
+<h2>🆕 Annonces clients</h2>
+<button class="btn" onclick="showForm('nouveaute')">+ Nouvelle annonce</button>
+<div id="form-nouveaute" style="display:none">
+<input type="hidden" id="nouveaute-index" value="-1">
+<input type="text" id="nouveaute-titre" placeholder="Titre de l'annonce">
+<input type="text" id="nouveaute-client" placeholder="Nom du client">
+<select id="nouveaute-cat"><option value="">Service</option><option value="Site Web">Web</option><option value="Application Mobile">App</option><option value="Logiciel">Logiciel</option><option value="Design">Design</option></select>
+<input type="text" id="nouveaute-tech" placeholder="Technologies">
+<textarea id="nouveaute-desc" placeholder="Description"></textarea>
+<div class="upload-area" onclick="document.getElementById('nouveaute-img-input').click()">🖼️ Cliquer pour ajouter une image</div>
+<input type="file" id="nouveaute-img-input" accept="image/*" style="display:none" onchange="previewImage(this,'nouveaute-preview')">
+<img id="nouveaute-preview" class="preview">
+<label style="display:flex;align-items:center;gap:8px;margin:8px 0"><input type="checkbox" id="nouveaute-publie" checked> Publier sur le site</label>
+<button class="btn btn-green" onclick="saveNouveaute()">💾 Enregistrer</button>
+<button class="btn btn-outline" onclick="hideForm('nouveaute')">Annuler</button>
+</div>
+<div id="nouveautes-list"></div>
+</div>
+
+<!-- BLOG -->
+<div id="tab-blog" class="tab-content">
+<h2>📝 Articles Blog</h2>
+<button class="btn" onclick="showForm('article')">+ Nouvel article</button>
+<div id="form-article" style="display:none">
+<input type="hidden" id="article-index" value="-1">
+<input type="text" id="article-titre" placeholder="Titre de l'article">
+<select id="article-cat"><option value="">Catégorie</option><option value="Web">Web</option><option value="Mobile">Mobile</option><option value="Design">Design</option><option value="Tech">Tech</option></select>
+<textarea id="article-contenu" placeholder="Contenu de l'article..." style="height:150px"></textarea>
+<div class="upload-area" onclick="document.getElementById('article-img-input').click()">🖼️ Image (optionnel)</div>
+<input type="file" id="article-img-input" accept="image/*" style="display:none" onchange="previewImage(this,'article-preview')">
+<img id="article-preview" class="preview">
+<button class="btn btn-green" onclick="saveArticle()">💾 Publier</button>
+<button class="btn btn-outline" onclick="hideForm('article')">Annuler</button>
+</div>
+<div id="articles-list"></div>
+</div>
+
+<!-- MESSAGES -->
+<div id="tab-messages" class="tab-content">
+<h2>📩 Messages reçus</h2>
+<div id="messages-list"></div>
+</div>
+
+</div>
+
+<script>
+// LOGIN
+function login(){
+if(document.getElementById('user').value.trim()==='admin'&&document.getElementById('pass').value.trim()==='afrinova2026'){
+localStorage.setItem('admin_ok','yes');
+document.getElementById('loginPage').style.display='none';
+document.getElementById('dashboard').style.display='block';
+loadAll();
+}else{alert('Identifiants incorrects');}
+}
+function logout(){localStorage.removeItem('admin_ok');location.reload();}
+if(localStorage.getItem('admin_ok')==='yes'){document.getElementById('loginPage').style.display='none';document.getElementById('dashboard').style.display='block';loadAll();}
+
+// ONGLETS
+function showTab(tab){
+document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+event.target.classList.add('active');
+document.getElementById('tab-'+tab).classList.add('active');
+}
+
+// AFFICHER/CACHER FORMULAIRES
+function showForm(type){document.getElementById('form-'+type).style.display='block'}
+function hideForm(type){document.getElementById('form-'+type).style.display='none'}
+
+// PREVIEW IMAGE
+var currentImage={};
+function previewImage(input,previewId){
+var file=input.files[0];
+if(file){
+var reader=new FileReader();
+reader.onload=function(e){
+document.getElementById(previewId).src=e.target.result;
+document.getElementById(previewId).style.display='block';
+currentImage[previewId]=e.target.result;
+};
+reader.readAsDataURL(file);
+}
+}
+
+// ============ PROJETS ============
+function loadProjets(){
+var projets=JSON.parse(localStorage.getItem('afrinova_projets')||'[]');
+var html='';
+projets.forEach(function(p,i){
+html+='<div class="item"><div class="item-info"><strong>'+p.nom+'</strong><p>'+p.categorie+' | '+(p.technologies||'')+'</p></div><div class="item-actions"><button class="btn-blue" onclick="editProjet('+i+')">✏️</button><button class="btn-red" onclick="deleteProjet('+i+')">🗑️</button></div></div>';
+});
+document.getElementById('projets-list').innerHTML=html||'<p style="color:#888">Aucun projet</p>';
+}
+function saveProjet(){
+var projets=JSON.parse(localStorage.getItem('afrinova_projets')||'[]');
+var index=parseInt(document.getElementById('projet-index').value);
+var p={
+nom:document.getElementById('projet-nom').value,
+categorie:document.getElementById('projet-cat').value,
+technologies:document.getElementById('projet-tech').value,
+lien:document.getElementById('projet-lien').value,
+description:document.getElementById('projet-desc').value,
+image:currentImage['projet-preview']||''
+};
+if(index>=0)projets[index]=p;else projets.push(p);
+localStorage.setItem('afrinova_projets',JSON.stringify(projets));
+hideForm('projet');loadProjets();currentImage={};
+}
+function editProjet(i){
+var projets=JSON.parse(localStorage.getItem('afrinova_projets')||'[]');
+var p=projets[i];
+document.getElementById('projet-index').value=i;
+document.getElementById('projet-nom').value=p.nom;
+document.getElementById('projet-cat').value=p.categorie;
+document.getElementById('projet-tech').value=p.technologies||'';
+document.getElementById('projet-lien').value=p.lien||'';
+document.getElementById('projet-desc').value=p.description||'';
+if(p.image){document.getElementById('projet-preview').src=p.image;document.getElementById('projet-preview').style.display='block';currentImage['projet-preview']=p.image;}
+showForm('projet');
+}
+function deleteProjet(i){if(confirm('Supprimer ?')){var p=JSON.parse(localStorage.getItem('afrinova_projets')||'[]');p.splice(i,1);localStorage.setItem('afrinova_projets',JSON.stringify(p));loadProjets();}}
+
+// ============ NOUVEAUTÉS ============
+function loadNouveautes(){
+var n=JSON.parse(localStorage.getItem('afrinova_nouveautes')||'[]');
+var html='';
+n.forEach(function(a,i){
+html+='<div class="item"><div class="item-info"><strong>'+a.titre+'</strong><p>'+a.client+' | '+a.categorie+' <span class="badge '+(a.publie?'badge-yes':'badge-no')+'">'+(a.publie?'Publié':'Brouillon')+'</span></p></div><div class="item-actions"><button class="btn-blue" onclick="editNouveaute('+i+')">✏️</button><button class="btn-red" onclick="deleteNouveaute('+i+')">🗑️</button></div></div>';
+});
+document.getElementById('nouveautes-list').innerHTML=html||'<p style="color:#888">Aucune annonce</p>';
+}
+function saveNouveaute(){
+var n=JSON.parse(localStorage.getItem('afrinova_nouveautes')||'[]');
+var index=parseInt(document.getElementById('nouveaute-index').value);
+var a={
+titre:document.getElementById('nouveaute-titre').value,
+client:document.getElementById('nouveaute-client').value,
+categorie:document.getElementById('nouveaute-cat').value,
+technologies:document.getElementById('nouveaute-tech').value,
+description:document.getElementById('nouveaute-desc').value,
+image:currentImage['nouveaute-preview']||'',
+publie:document.getElementById('nouveaute-publie').checked,
+date:new Date().toISOString()
+};
+if(index>=0)n[index]=a;else n.push(a);
+localStorage.setItem('afrinova_nouveautes',JSON.stringify(n));
+hideForm('nouveaute');loadNouveautes();currentImage={};
+}
+function editNouveaute(i){
+var n=JSON.parse(localStorage.getItem('afrinova_nouveautes')||'[]');
+var a=n[i];
+document.getElementById('nouveaute-index').value=i;
+document.getElementById('nouveaute-titre').value=a.titre;
+document.getElementById('nouveaute-client').value=a.client;
+document.getElementById('nouveaute-cat').value=a.categorie;
+document.getElementById('nouveaute-tech').value=a.technologies||'';
+document.getElementById('nouveaute-desc').value=a.description||'';
+document.getElementById('nouveaute-publie').checked=a.publie!==false;
+if(a.image){document.getElementById('nouveaute-preview').src=a.image;document.getElementById('nouveaute-preview').style.display='block';currentImage['nouveaute-preview']=a.image;}
+showForm('nouveaute');
+}
+function deleteNouveaute(i){if(confirm('Supprimer ?')){var n=JSON.parse(localStorage.getItem('afrinova_nouveautes')||'[]');n.splice(i,1);localStorage.setItem('afrinova_nouveautes',JSON.stringify(n));loadNouveautes();}}
+
+// ============ ARTICLES ============
+function loadArticles(){
+var a=JSON.parse(localStorage.getItem('afrinova_articles')||'[]');
+var html='';
+a.forEach(function(art,i){
+html+='<div class="item"><div class="item-info"><strong>'+art.titre+'</strong><p>'+art.categorie+' | '+(art.contenu||'').substring(0,50)+'...</p></div><div class="item-actions"><button class="btn-blue" onclick="editArticle('+i+')">✏️</button><button class="btn-red" onclick="deleteArticle('+i+')">🗑️</button></div></div>';
+});
+document.getElementById('articles-list').innerHTML=html||'<p style="color:#888">Aucun article</p>';
+}
+function saveArticle(){
+var a=JSON.parse(localStorage.getItem('afrinova_articles')||'[]');
+var index=parseInt(document.getElementById('article-index').value);
+var art={
+titre:document.getElementById('article-titre').value,
+categorie:document.getElementById('article-cat').value,
+contenu:document.getElementById('article-contenu').value,
+image:currentImage['article-preview']||'',
+date:new Date().toISOString()
+};
+if(index>=0)a[index]=art;else a.push(art);
+localStorage.setItem('afrinova_articles',JSON.stringify(a));
+hideForm('article');loadArticles();currentImage={};
+}
+function editArticle(i){
+var a=JSON.parse(localStorage.getItem('afrinova_articles')||'[]');
+var art=a[i];
+document.getElementById('article-index').value=i;
+document.getElementById('article-titre').value=art.titre;
+document.getElementById('article-cat').value=art.categorie||'';
+document.getElementById('article-contenu').value=art.contenu||'';
+if(art.image){document.getElementById('article-preview').src=art.image;document.getElementById('article-preview').style.display='block';currentImage['article-preview']=art.image;}
+showForm('article');
+}
+function deleteArticle(i){if(confirm('Supprimer ?')){var a=JSON.parse(localStorage.getItem('afrinova_articles')||'[]');a.splice(i,1);localStorage.setItem('afrinova_articles',JSON.stringify(a));loadArticles();}}
+
+// ============ MESSAGES ============
+function loadMessages(){
+var m=JSON.parse(localStorage.getItem('afrinova_messages')||'[]');
+var html='';
+m.slice(0,20).forEach(function(msg){
+html+='<div class="item"><div class="item-info"><strong>'+msg.name+'</strong><p>'+msg.email+' | '+msg.service+' | '+(msg.message||'').substring(0,40)+'</p></div></div>';
+});
+document.getElementById('messages-list').innerHTML=html||'<p style="color:#888">Aucun message</p>';
+}
+
+// CHARGER TOUT
+function loadAll(){loadProjets();loadNouveautes();loadArticles();loadMessages();}
+</script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Afrinova Tech</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📝</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/mobile.css">
+    <style>
+        .blog-hero {
+            padding: 120px 20px 40px;
+            text-align: center;
+        }
+        .blog-hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: #D4AF37;
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        .blog-hero p {
+            color: #888;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        .blog-search {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+            gap: 10px;
+        }
+        .blog-search input {
+            flex: 1;
+            padding: 15px 20px;
+            background: #111;
+            border: 1px solid rgba(212,175,55,0.3);
+            border-radius: 30px;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+        }
+        .blog-search input:focus {
+            border-color: #D4AF37;
+        }
+        .blog-search button {
+            padding: 15px 25px;
+            background: #D4AF37;
+            color: #000;
+            border: none;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .blog-card {
+            background: #161616;
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .blog-card:hover {
+            border-color: #D4AF37;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+        }
+        .blog-card-image {
+            width: 100%;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+        }
+        .blog-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .blog-card-body {
+            padding: 20px;
+        }
+        .blog-card-body h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: #D4AF37;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .blog-card-body p {
+            color: #888;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .blog-card-body .date {
+            color: #666;
+            font-size: 12px;
+        }
+        .blog-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .blog-cat {
+            background: rgba(212,175,55,0.1);
+            color: #D4AF37;
+            padding: 3px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            border: 1px solid rgba(212,175,55,0.3);
+        }
+        .empty-blog {
+            text-align: center;
+            padding: 60px;
+            color: #888;
+            grid-column: 1 / -1;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar" id="navbar">
+    <a href="../index.html" class="nav-logo">
+        <div class="nav-logo-icon"><img src="../assets/images/logo.png" alt="Afrinova"></div>
+        <div class="nav-logo-text">AFRINOVA<span>TECH</span></div>
+    </a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="../index.html">Accueil</a></li>
+        <li><a href="../index.html#services">Services</a></li>
+        <li><a href="../portfolio.html">Portfolio</a></li>
+        <li><a href="../galerie.html">📸 Galerie</a></li>
+        <li><a href="../nouveautes-site.html">🆕 Nouveautés</a></li>
+        <li><a href="../devis.html">💰 Devis</a></li>
+        <li><a href="index.html" class="active">📝 Blog</a></li>
+        <li><a href="../index.html#contact">📞 Contact</a></li>
+        <li>
+            <select onchange="switchLanguage(this.value)" style="background:#111;color:#D4AF37;border:1px solid rgba(212,175,55,0.3);padding:5px 10px;border-radius:5px;font-size:14px;cursor:pointer;">
+                <option value="fr">🇫🇷</option>
+                <option value="en">🇬🇧</option>
+                <option value="ha">🇳🇪</option>
+            </select>
+        </li>
+    </ul>
+    <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+</nav>
+
+<!-- Hero -->
+<div class="blog-hero">
+    <h1>📝 Blog Afrinova</h1>
+    <p>Actualités, tutoriels et innovations tech en Afrique</p>
+    <div class="blog-search">
+        <input type="text" id="searchInput" placeholder="Rechercher un article...">
+        <button onclick="searchArticles()">🔍</button>
+    </div>
+</div>
+
+<!-- Articles -->
+<div class="blog-grid" id="blogGrid">
+    <div class="empty-blog">
+        <p>📭 Aucun article pour le moment</p>
+        <p style="margin-top:10px;">Les articles apparaîtront ici une fois publiés depuis l'admin</p>
+        <a href="../admin/index.html" style="color:#D4AF37;margin-top:15px;display:inline-block;">→ Accéder à l'admin</a>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-bottom">
+            <p>© 2026 <span>Afrinova Tech</span>. Agadez, Niger.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script src="../assets/js/lang.js"></script>
+<script>
+// ============ CHARGER LES ARTICLES ============
+var articles = JSON.parse(localStorage.getItem('afrinova_articles') || '[]');
+
+var couleurs = ['1a1a2e','0f0f23','1a1025','0a1a1a','2d1a3e','16213e'];
+var emojis = ['💻','📱','🌐','🎨','🔒','🤖','📊','🚀'];
+
+function afficherArticles(filtre) {
+    var grid = document.getElementById('blogGrid');
+    var liste = articles;
+    
+    if (filtre) {
+        liste = articles.filter(function(a) {
+            return a.titre.toLowerCase().includes(filtre.toLowerCase()) || 
+                   a.contenu.toLowerCase().includes(filtre.toLowerCase()) ||
+                   (a.categorie || '').toLowerCase().includes(filtre.toLowerCase());
+        });
+    }
+    
+    if (liste.length === 0) {
+        grid.innerHTML = '<div class="empty-blog"><p>📭 Aucun article trouvé</p></div>';
+        return;
+    }
+    
+    // Trier par date
+    liste.sort(function(a, b) { return new Date(b.date) - new Date(a.date); });
+    
+    var html = '';
+    liste.forEach(function(article, index) {
+        var couleur = couleurs[index % couleurs.length];
+        var emoji = article.emoji || emojis[index % emojis.length];
+        var date = new Date(article.date);
+        var dateStr = date.getDate() + ' ' + ['jan','fév','mar','avr','mai','juin','juil','août','sep','oct','nov','déc'][date.getMonth()] + ' ' + date.getFullYear();
+        
+        var imageHTML = '';
+        if (article.image) {
+            imageHTML = '<img src="' + article.image + '" alt="' + article.titre + '">';
+        } else {
+            imageHTML = '<span style="font-size:60px;">' + emoji + '</span>';
+        }
+        
+        var categoriesHTML = '';
+        if (article.categorie) {
+            categoriesHTML = '<div class="blog-categories"><span class="blog-cat">' + article.categorie + '</span></div>';
+        }
+        
+        html += '<div class="blog-card">';
+        html += '<div class="blog-card-image" style="background:#' + couleur + ';">' + imageHTML + '</div>';
+        html += '<div class="blog-card-body">';
+        html += categoriesHTML;
+        html += '<h3>' + article.titre + '</h3>';
+        html += '<p>' + (article.contenu || '').substring(0, 150) + '...</p>';
+        html += '<div class="date">📅 ' + dateStr + '</div>';
+        html += '</div>';
+        html += '</div>';
+    });
+    
+    grid.innerHTML = html;
+}
+
+function searchArticles() {
+    var filtre = document.getElementById('searchInput').value;
+    afficherArticles(filtre);
+}
+
+document.getElementById('searchInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') searchArticles();
+});
+
+// Afficher au chargement
+afficherArticles();
+</script>
+</body>
+</html>
