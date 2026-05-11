@@ -48,6 +48,22 @@
       gtag('js', new Date());
       gtag('config', 'G-DM12NDYZRT');
     </script>
+
+    <style>
+        .testimonials-section { padding: 60px 20px; background: #0A0A0A; overflow: hidden; }
+        .testimonials-track { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 20px 0; scrollbar-width: none; }
+        .testimonials-track::-webkit-scrollbar { display: none; }
+        .testimonial-card { flex: 0 0 320px; scroll-snap-align: center; background: #161616; border: 1px solid rgba(212,175,55,0.2); border-radius: 15px; padding: 20px; text-align: center; transition: transform 0.3s; }
+        .testimonial-card:hover { transform: translateY(-5px); border-color: #D4AF37; }
+        .testimonial-card img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; border: 2px solid #D4AF37; }
+        .testimonial-stars { color: #D4AF37; font-size: 16px; margin: 5px 0; }
+        .testimonial-text { color: #ccc; font-size: 13px; font-style: italic; margin: 10px 0; line-height: 1.5; }
+        .testimonial-author { color: #D4AF37; font-weight: bold; margin-top: 10px; }
+        .testimonial-post { color: #888; font-size: 12px; }
+        .testimonials-dots { text-align: center; margin-top: 10px; }
+        .testimonials-dots .dot { display: inline-block; width: 8px; height: 8px; background: #333; border-radius: 50%; margin: 0 4px; cursor: pointer; }
+        .testimonials-dots .dot.active { background: #D4AF37; }
+    </style>
 </head>
 <body>
 
@@ -143,6 +159,17 @@
     </div>
 </section>
 
+<!-- Section Témoignages -->
+<section class="testimonials-section" id="testimonials">
+    <div class="section-header">
+        <div class="section-label">Ils nous font confiance</div>
+        <h2 class="section-title">Témoignages</h2>
+        <div class="section-divider"></div>
+    </div>
+    <div class="testimonials-track" id="testimonialsTrack"></div>
+    <div class="testimonials-dots" id="testimonialsDots"></div>
+</section>
+
 <section class="contact-section" id="contact">
     <div class="section-header">
         <div class="section-label">Contactez-nous</div>
@@ -183,6 +210,7 @@
                     <li><a href="galerie.html">→ Galerie</a></li>
                     <li><a href="nouveautes-site.html">→ Nouveautés</a></li>
                     <li><a href="devis.html">→ Devis</a></li>
+                    <li><a href="rendezvous.html">→ Rendez-vous</a></li>
                     <li><a href="blog/index.html">→ Blog</a></li>
                     <li><a href="admin/index.html">🔐 Admin</a></li>
                     <li><a href="mentions-legales.html">⚖️ Mentions Légales</a></li>
@@ -205,6 +233,26 @@
 
 <script src="assets/js/main.js"></script>
 <script src="assets/js/chatbot.js"></script>
+<script>
+// Témoignages dynamiques
+(function(){
+    var temoignages = JSON.parse(localStorage.getItem('afrinova_temoignages') || '[]');
+    var publies = temoignages.filter(function(t){ return t.publie !== false; });
+    var track = document.getElementById('testimonialsTrack');
+    var dotsContainer = document.getElementById('testimonialsDots');
+    if(publies.length === 0) {
+        track.innerHTML = '<p style="color:#888;text-align:center;width:100%">Aucun témoignage pour le moment.</p>';
+        return;
+    }
+    var html = '';
+    publies.forEach(function(t, i){
+        var stars = '⭐'.repeat(t.note || 5);
+        var imageHTML = t.image ? '<img src="'+t.image+'" alt="'+t.nom+'">' : '<div style="width:60px;height:60px;border-radius:50%;background:#D4AF37;display:flex;align-items:center;justify-content:center;font-size:24px;color:#000;margin:0 auto 10px">'+(t.nom.charAt(0).toUpperCase())+'</div>';
+        html += '<div class="testimonial-card">'+imageHTML+'<div class="testimonial-stars">'+stars+'</div><p class="testimonial-text">"'+t.texte+'"</p><div class="testimonial-author">'+t.nom+'</div><div class="testimonial-post">'+ (t.poste || '') +'</div></div>';
+    });
+    track.innerHTML = html;
+})();
+</script>
 <script>
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {

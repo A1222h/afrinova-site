@@ -62,7 +62,6 @@ textarea{height:100px;resize:vertical}
 <button class="logout-btn" onclick="logout()">✕ Déconnexion</button>
 <h1>📊 Gestion Afrinova</h1>
 
-<!-- Menu rapide -->
 <div class="grid">
 <a href="../index.html" target="_blank" class="card"><div class="icon">🌐</div><div class="title">Site</div><div class="sub">Accueil</div></a>
 <a href="../galerie.html" target="_blank" class="card"><div class="icon">📸</div><div class="title">Galerie</div><div class="sub">Photos</div></a>
@@ -70,13 +69,13 @@ textarea{height:100px;resize:vertical}
 <a href="../devis.html" target="_blank" class="card"><div class="icon">💰</div><div class="title">Devis</div><div class="sub">Prix</div></a>
 </div>
 
-<!-- Onglets -->
 <div class="tabs">
 <div class="tab active" onclick="showTab('projets')">📂 Projets</div>
 <div class="tab" onclick="showTab('nouveautes')">🆕 Annonces</div>
 <div class="tab" onclick="showTab('blog')">📝 Articles</div>
 <div class="tab" onclick="showTab('messages')">📩 Messages</div>
 <div class="tab" onclick="showTab('rendezvous')">📅 Rendez-vous</div>
+<div class="tab" onclick="showTab('temoignages')">⭐ Témoignages</div>
 </div>
 
 <!-- PROJETS -->
@@ -150,6 +149,26 @@ textarea{height:100px;resize:vertical}
 <div id="rdv-list"></div>
 </div>
 
+<!-- TÉMOIGNAGES -->
+<div id="tab-temoignages" class="tab-content">
+<h2>⭐ Témoignages clients</h2>
+<button class="btn" onclick="showForm('temoignage')">+ Ajouter un témoignage</button>
+<div id="form-temoignage" style="display:none">
+<input type="hidden" id="temoignage-index" value="-1">
+<input type="text" id="temoignage-nom" placeholder="Nom du client">
+<input type="text" id="temoignage-poste" placeholder="Poste / Entreprise (optionnel)">
+<input type="number" id="temoignage-note" placeholder="Note (1 à 5)" min="1" max="5" value="5">
+<textarea id="temoignage-texte" placeholder="Témoignage du client..."></textarea>
+<div class="upload-area" onclick="document.getElementById('temoignage-img-input').click()">🖼️ Photo du client (optionnel)</div>
+<input type="file" id="temoignage-img-input" accept="image/*" style="display:none" onchange="previewImage(this,'temoignage-preview')">
+<img id="temoignage-preview" class="preview">
+<label style="display:flex;align-items:center;gap:8px;margin:8px 0"><input type="checkbox" id="temoignage-publie" checked> Afficher sur le site</label>
+<button class="btn btn-green" onclick="saveTemoignage()">💾 Enregistrer</button>
+<button class="btn btn-outline" onclick="hideForm('temoignage')">Annuler</button>
+</div>
+<div id="temoignages-list"></div>
+</div>
+
 </div>
 
 <script>
@@ -173,11 +192,9 @@ event.target.classList.add('active');
 document.getElementById('tab-'+tab).classList.add('active');
 }
 
-// AFFICHER/CACHER FORMULAIRES
 function showForm(type){document.getElementById('form-'+type).style.display='block'}
 function hideForm(type){document.getElementById('form-'+type).style.display='none'}
 
-// PREVIEW IMAGE
 var currentImage={};
 function previewImage(input,previewId){
 var file=input.files[0];
@@ -192,19 +209,19 @@ reader.readAsDataURL(file);
 }
 }
 
-// ============ PROJETS ============
+// PROJETS
 function loadProjets(){
-var projets=JSON.parse(localStorage.getItem('afrinova_projets')||'[]');
+var p=JSON.parse(localStorage.getItem('afrinova_projets')||'[]');
 var html='';
-projets.forEach(function(p,i){
+p.forEach(function(p,i){
 html+='<div class="item"><div class="item-info"><strong>'+p.nom+'</strong><p>'+p.categorie+' | '+(p.technologies||'')+'</p></div><div class="item-actions"><button class="btn-blue" onclick="editProjet('+i+')">✏️</button><button class="btn-red" onclick="deleteProjet('+i+')">🗑️</button></div></div>';
 });
 document.getElementById('projets-list').innerHTML=html||'<p style="color:#888">Aucun projet</p>';
 }
 function saveProjet(){
-var projets=JSON.parse(localStorage.getItem('afrinova_projets')||'[]');
-var index=parseInt(document.getElementById('projet-index').value);
-var p={
+var p=JSON.parse(localStorage.getItem('afrinova_projets')||'[]');
+var idx=parseInt(document.getElementById('projet-index').value);
+var projet={
 nom:document.getElementById('projet-nom').value,
 categorie:document.getElementById('projet-cat').value,
 technologies:document.getElementById('projet-tech').value,
@@ -212,25 +229,14 @@ lien:document.getElementById('projet-lien').value,
 description:document.getElementById('projet-desc').value,
 image:currentImage['projet-preview']||''
 };
-if(index>=0)projets[index]=p;else projets.push(p);
-localStorage.setItem('afrinova_projets',JSON.stringify(projets));
+if(idx>=0)p[idx]=projet;else p.push(projet);
+localStorage.setItem('afrinova_projets',JSON.stringify(p));
 hideForm('projet');loadProjets();currentImage={};
 }
-function editProjet(i){
-var projets=JSON.parse(localStorage.getItem('afrinova_projets')||'[]');
-var p=projets[i];
-document.getElementById('projet-index').value=i;
-document.getElementById('projet-nom').value=p.nom;
-document.getElementById('projet-cat').value=p.categorie;
-document.getElementById('projet-tech').value=p.technologies||'';
-document.getElementById('projet-lien').value=p.lien||'';
-document.getElementById('projet-desc').value=p.description||'';
-if(p.image){document.getElementById('projet-preview').src=p.image;document.getElementById('projet-preview').style.display='block';currentImage['projet-preview']=p.image;}
-showForm('projet');
-}
+function editProjet(i){var p=JSON.parse(localStorage.getItem('afrinova_projets')||'[]');var pr=p[i];document.getElementById('projet-index').value=i;document.getElementById('projet-nom').value=pr.nom;document.getElementById('projet-cat').value=pr.categorie;document.getElementById('projet-tech').value=pr.technologies||'';document.getElementById('projet-lien').value=pr.lien||'';document.getElementById('projet-desc').value=pr.description||'';if(pr.image){document.getElementById('projet-preview').src=pr.image;document.getElementById('projet-preview').style.display='block';currentImage['projet-preview']=pr.image;}showForm('projet');}
 function deleteProjet(i){if(confirm('Supprimer ?')){var p=JSON.parse(localStorage.getItem('afrinova_projets')||'[]');p.splice(i,1);localStorage.setItem('afrinova_projets',JSON.stringify(p));loadProjets();}}
 
-// ============ NOUVEAUTÉS ============
+// NOUVEAUTÉS
 function loadNouveautes(){
 var n=JSON.parse(localStorage.getItem('afrinova_nouveautes')||'[]');
 var html='';
@@ -239,96 +245,63 @@ html+='<div class="item"><div class="item-info"><strong>'+a.titre+'</strong><p>'
 });
 document.getElementById('nouveautes-list').innerHTML=html||'<p style="color:#888">Aucune annonce</p>';
 }
-function saveNouveaute(){
-var n=JSON.parse(localStorage.getItem('afrinova_nouveautes')||'[]');
-var index=parseInt(document.getElementById('nouveaute-index').value);
-var a={
-titre:document.getElementById('nouveaute-titre').value,
-client:document.getElementById('nouveaute-client').value,
-categorie:document.getElementById('nouveaute-cat').value,
-technologies:document.getElementById('nouveaute-tech').value,
-description:document.getElementById('nouveaute-desc').value,
-image:currentImage['nouveaute-preview']||'',
-publie:document.getElementById('nouveaute-publie').checked,
-date:new Date().toISOString()
-};
-if(index>=0)n[index]=a;else n.push(a);
-localStorage.setItem('afrinova_nouveautes',JSON.stringify(n));
-hideForm('nouveaute');loadNouveautes();currentImage={};
-}
-function editNouveaute(i){
-var n=JSON.parse(localStorage.getItem('afrinova_nouveautes')||'[]');
-var a=n[i];
-document.getElementById('nouveaute-index').value=i;
-document.getElementById('nouveaute-titre').value=a.titre;
-document.getElementById('nouveaute-client').value=a.client;
-document.getElementById('nouveaute-cat').value=a.categorie;
-document.getElementById('nouveaute-tech').value=a.technologies||'';
-document.getElementById('nouveaute-desc').value=a.description||'';
-document.getElementById('nouveaute-publie').checked=a.publie!==false;
-if(a.image){document.getElementById('nouveaute-preview').src=a.image;document.getElementById('nouveaute-preview').style.display='block';currentImage['nouveaute-preview']=a.image;}
-showForm('nouveaute');
-}
+function saveNouveaute(){var n=JSON.parse(localStorage.getItem('afrinova_nouveautes')||'[]');var idx=parseInt(document.getElementById('nouveaute-index').value);var a={titre:document.getElementById('nouveaute-titre').value,client:document.getElementById('nouveaute-client').value,categorie:document.getElementById('nouveaute-cat').value,technologies:document.getElementById('nouveaute-tech').value,description:document.getElementById('nouveaute-desc').value,image:currentImage['nouveaute-preview']||'',publie:document.getElementById('nouveaute-publie').checked,date:new Date().toISOString()};if(idx>=0)n[idx]=a;else n.push(a);localStorage.setItem('afrinova_nouveautes',JSON.stringify(n));hideForm('nouveaute');loadNouveautes();currentImage={};}
+function editNouveaute(i){var n=JSON.parse(localStorage.getItem('afrinova_nouveautes')||'[]');var a=n[i];document.getElementById('nouveaute-index').value=i;document.getElementById('nouveaute-titre').value=a.titre;document.getElementById('nouveaute-client').value=a.client;document.getElementById('nouveaute-cat').value=a.categorie;document.getElementById('nouveaute-tech').value=a.technologies||'';document.getElementById('nouveaute-desc').value=a.description||'';document.getElementById('nouveaute-publie').checked=a.publie!==false;if(a.image){document.getElementById('nouveaute-preview').src=a.image;document.getElementById('nouveaute-preview').style.display='block';currentImage['nouveaute-preview']=a.image;}showForm('nouveaute');}
 function deleteNouveaute(i){if(confirm('Supprimer ?')){var n=JSON.parse(localStorage.getItem('afrinova_nouveautes')||'[]');n.splice(i,1);localStorage.setItem('afrinova_nouveautes',JSON.stringify(n));loadNouveautes();}}
 
-// ============ ARTICLES ============
-function loadArticles(){
-var a=JSON.parse(localStorage.getItem('afrinova_articles')||'[]');
-var html='';
-a.forEach(function(art,i){
-html+='<div class="item"><div class="item-info"><strong>'+art.titre+'</strong><p>'+art.categorie+' | '+(art.contenu||'').substring(0,50)+'...</p></div><div class="item-actions"><button class="btn-blue" onclick="editArticle('+i+')">✏️</button><button class="btn-red" onclick="deleteArticle('+i+')">🗑️</button></div></div>';
-});
-document.getElementById('articles-list').innerHTML=html||'<p style="color:#888">Aucun article</p>';
-}
-function saveArticle(){
-var a=JSON.parse(localStorage.getItem('afrinova_articles')||'[]');
-var index=parseInt(document.getElementById('article-index').value);
-var art={
-titre:document.getElementById('article-titre').value,
-categorie:document.getElementById('article-cat').value,
-contenu:document.getElementById('article-contenu').value,
-image:currentImage['article-preview']||'',
-date:new Date().toISOString()
-};
-if(index>=0)a[index]=art;else a.push(art);
-localStorage.setItem('afrinova_articles',JSON.stringify(a));
-hideForm('article');loadArticles();currentImage={};
-}
-function editArticle(i){
-var a=JSON.parse(localStorage.getItem('afrinova_articles')||'[]');
-var art=a[i];
-document.getElementById('article-index').value=i;
-document.getElementById('article-titre').value=art.titre;
-document.getElementById('article-cat').value=art.categorie||'';
-document.getElementById('article-contenu').value=art.contenu||'';
-if(art.image){document.getElementById('article-preview').src=art.image;document.getElementById('article-preview').style.display='block';currentImage['article-preview']=art.image;}
-showForm('article');
-}
+// ARTICLES
+function loadArticles(){var a=JSON.parse(localStorage.getItem('afrinova_articles')||'[]');var html='';a.forEach(function(art,i){html+='<div class="item"><div class="item-info"><strong>'+art.titre+'</strong><p>'+art.categorie+' | '+(art.contenu||'').substring(0,50)+'...</p></div><div class="item-actions"><button class="btn-blue" onclick="editArticle('+i+')">✏️</button><button class="btn-red" onclick="deleteArticle('+i+')">🗑️</button></div></div>';});document.getElementById('articles-list').innerHTML=html||'<p style="color:#888">Aucun article</p>';}
+function saveArticle(){var a=JSON.parse(localStorage.getItem('afrinova_articles')||'[]');var idx=parseInt(document.getElementById('article-index').value);var art={titre:document.getElementById('article-titre').value,categorie:document.getElementById('article-cat').value,contenu:document.getElementById('article-contenu').value,image:currentImage['article-preview']||'',date:new Date().toISOString()};if(idx>=0)a[idx]=art;else a.push(art);localStorage.setItem('afrinova_articles',JSON.stringify(a));hideForm('article');loadArticles();currentImage={};}
+function editArticle(i){var a=JSON.parse(localStorage.getItem('afrinova_articles')||'[]');var art=a[i];document.getElementById('article-index').value=i;document.getElementById('article-titre').value=art.titre;document.getElementById('article-cat').value=art.categorie||'';document.getElementById('article-contenu').value=art.contenu||'';if(art.image){document.getElementById('article-preview').src=art.image;document.getElementById('article-preview').style.display='block';currentImage['article-preview']=art.image;}showForm('article');}
 function deleteArticle(i){if(confirm('Supprimer ?')){var a=JSON.parse(localStorage.getItem('afrinova_articles')||'[]');a.splice(i,1);localStorage.setItem('afrinova_articles',JSON.stringify(a));loadArticles();}}
 
-// ============ MESSAGES ============
-function loadMessages(){
-var m=JSON.parse(localStorage.getItem('afrinova_messages')||'[]');
-var html='';
-m.slice(0,20).forEach(function(msg){
-html+='<div class="item"><div class="item-info"><strong>'+msg.name+'</strong><p>'+msg.email+' | '+msg.service+' | '+(msg.message||'').substring(0,40)+'</p></div></div>';
-});
-document.getElementById('messages-list').innerHTML=html||'<p style="color:#888">Aucun message</p>';
-}
+// MESSAGES
+function loadMessages(){var m=JSON.parse(localStorage.getItem('afrinova_messages')||'[]');var html='';m.slice(0,20).forEach(function(msg){html+='<div class="item"><div class="item-info"><strong>'+msg.name+'</strong><p>'+msg.email+' | '+msg.service+' | '+(msg.message||'').substring(0,40)+'</p></div></div>';});document.getElementById('messages-list').innerHTML=html||'<p style="color:#888">Aucun message</p>';}
 
-// ============ RENDEZ-VOUS ============
-function loadRdv(){
-var rdvs=JSON.parse(localStorage.getItem('afrinova_appointments')||'[]');
-var html='';
-rdvs.slice(0,20).forEach(function(rdv,i){
-html+='<div class="item"><div class="item-info"><strong>'+rdv.name+'</strong><p>📅 '+rdv.date+' à '+rdv.time+' | 🛠 '+ (rdv.service||'Non spécifié') +' | 📧 '+rdv.email+'</p><p style="font-size:10px;color:#aaa">'+(rdv.message||'')+'</p></div><div class="item-actions"><button class="btn-red" onclick="deleteRdv('+i+')">🗑️</button></div></div>';
-});
-document.getElementById('rdv-list').innerHTML=html||'<p style="color:#888">Aucun rendez-vous</p>';
-}
+// RENDEZ-VOUS
+function loadRdv(){var rdvs=JSON.parse(localStorage.getItem('afrinova_appointments')||'[]');var html='';rdvs.forEach(function(rdv,i){html+='<div class="item"><div class="item-info"><strong>'+rdv.name+'</strong><p>📅 '+rdv.date+' à '+rdv.time+' | 🛠 '+(rdv.service||'Non spécifié')+' | 📧 '+rdv.email+'</p><p style="font-size:10px;color:#aaa">'+(rdv.message||'')+'</p></div><div class="item-actions"><button class="btn-red" onclick="deleteRdv('+i+')">🗑️</button></div></div>';});document.getElementById('rdv-list').innerHTML=html||'<p style="color:#888">Aucun rendez-vous</p>';}
 function deleteRdv(i){if(confirm('Supprimer ce rendez-vous ?')){var rdvs=JSON.parse(localStorage.getItem('afrinova_appointments')||'[]');rdvs.splice(i,1);localStorage.setItem('afrinova_appointments',JSON.stringify(rdvs));loadRdv();}}
 
-// CHARGER TOUT
-function loadAll(){loadProjets();loadNouveautes();loadArticles();loadMessages();loadRdv();}
+// TÉMOIGNAGES
+function loadTemoignages(){
+var t=JSON.parse(localStorage.getItem('afrinova_temoignages')||'[]');
+var html='';
+t.forEach(function(tem,i){
+var stars='⭐'.repeat(tem.note||5);
+html+='<div class="item"><div class="item-info"><strong>'+tem.nom+'</strong><p>'+stars+' | '+(tem.texte||'').substring(0,60)+'... <span class="badge '+(tem.publie?'badge-yes':'badge-no')+'">'+(tem.publie?'Publié':'Brouillon')+'</span></p></div><div class="item-actions"><button class="btn-blue" onclick="editTemoignage('+i+')">✏️</button><button class="btn-red" onclick="deleteTemoignage('+i+')">🗑️</button></div></div>';
+});
+document.getElementById('temoignages-list').innerHTML=html||'<p style="color:#888">Aucun témoignage</p>';
+}
+function saveTemoignage(){
+var t=JSON.parse(localStorage.getItem('afrinova_temoignages')||'[]');
+var idx=parseInt(document.getElementById('temoignage-index').value);
+var tem={
+nom:document.getElementById('temoignage-nom').value,
+poste:document.getElementById('temoignage-poste').value,
+note:parseInt(document.getElementById('temoignage-note').value),
+texte:document.getElementById('temoignage-texte').value,
+image:currentImage['temoignage-preview']||'',
+publie:document.getElementById('temoignage-publie').checked
+};
+if(idx>=0)t[idx]=tem;else t.push(tem);
+localStorage.setItem('afrinova_temoignages',JSON.stringify(t));
+hideForm('temoignage');loadTemoignages();currentImage={};
+}
+function editTemoignage(i){
+var t=JSON.parse(localStorage.getItem('afrinova_temoignages')||'[]');
+var tem=t[i];
+document.getElementById('temoignage-index').value=i;
+document.getElementById('temoignage-nom').value=tem.nom;
+document.getElementById('temoignage-poste').value=tem.poste||'';
+document.getElementById('temoignage-note').value=tem.note;
+document.getElementById('temoignage-texte').value=tem.texte||'';
+document.getElementById('temoignage-publie').checked=tem.publie!==false;
+if(tem.image){document.getElementById('temoignage-preview').src=tem.image;document.getElementById('temoignage-preview').style.display='block';currentImage['temoignage-preview']=tem.image;}
+showForm('temoignage');
+}
+function deleteTemoignage(i){if(confirm('Supprimer ?')){var t=JSON.parse(localStorage.getItem('afrinova_temoignages')||'[]');t.splice(i,1);localStorage.setItem('afrinova_temoignages',JSON.stringify(t));loadTemoignages();}}
+
+function loadAll(){loadProjets();loadNouveautes();loadArticles();loadMessages();loadRdv();loadTemoignages();}
 </script>
 </body>
 </html>
