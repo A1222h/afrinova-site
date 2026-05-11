@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prendre rendez-vous - Afrinova Tech</title>
+    <meta name="description" content="Prenez rendez-vous avec Afrinova Tech pour discuter de votre projet digital.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📅</text></svg>">
+    <link rel="manifest" href="/afrinova-site/manifest.json">
+    <meta name="theme-color" content="#D4AF37">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/mobile.css">
+    <style>
+        .rdv-container {
+            max-width: 700px;
+            margin: 100px auto 40px;
+            padding: 40px;
+            background: #161616;
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        .rdv-container h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: #D4AF37;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .rdv-container .subtitle {
+            color: #888;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            color: #ccc;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background: #111;
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 8px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            outline: none;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: #D4AF37;
+        }
+        .btn-rdv {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #D4AF37, #B8860B);
+            color: #000;
+            border: none;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+        .btn-rdv:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212,175,55,0.3);
+        }
+        .success-message {
+            background: rgba(0,255,136,0.1);
+            border: 1px solid #00FF88;
+            color: #00FF88;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+        }
+    </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DM12NDYZRT"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-DM12NDYZRT');
+    </script>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <a href="index.html" class="nav-logo">
+            <div class="nav-logo-icon"><img src="assets/images/logo.png" alt="Afrinova"></div>
+            <div class="nav-logo-text">AFRINOVA<span>TECH</span></div>
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="portfolio.html">Portfolio</a></li>
+            <li><a href="galerie.html">📸 Galerie</a></li>
+            <li><a href="nouveautes-site.html">🆕 Nouveautés</a></li>
+            <li><a href="devis.html">💰 Devis</a></li>
+            <li><a href="blog/index.html">📝 Blog</a></li>
+            <li><a href="index.html#contact">📞 Contact</a></li>
+            <li>
+                <select onchange="switchLanguage(this.value)" style="background:#111;color:#D4AF37;border:1px solid rgba(212,175,55,0.3);padding:5px 10px;border-radius:5px;font-size:14px;cursor:pointer;">
+                    <option value="fr">🇫🇷</option>
+                    <option value="en">🇬🇧</option>
+                    <option value="ha">🇳🇪</option>
+                </select>
+            </li>
+        </ul>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+    </nav>
+
+    <div class="rdv-container">
+        <h1>📅 Prendre rendez-vous</h1>
+        <p class="subtitle">Choisissez une date et une heure qui vous conviennent pour discuter de votre projet.</p>
+        
+        <div class="success-message" id="successMessage">
+            ✅ Votre demande de rendez-vous a été envoyée avec succès. Nous vous contacterons rapidement pour confirmer.
+        </div>
+
+        <form id="rdvForm">
+            <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+                <div class="form-group">
+                    <label for="rdvName">Nom complet *</label>
+                    <input type="text" id="rdvName" required placeholder="Votre nom">
+                </div>
+                <div class="form-group">
+                    <label for="rdvEmail">Email *</label>
+                    <input type="email" id="rdvEmail" required placeholder="votre@email.com">
+                </div>
+            </div>
+            <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+                <div class="form-group">
+                    <label for="rdvPhone">Téléphone</label>
+                    <input type="tel" id="rdvPhone" placeholder="+227 XX XX XX XX">
+                </div>
+                <div class="form-group">
+                    <label for="rdvService">Service souhaité</label>
+                    <select id="rdvService">
+                        <option value="">Choisissez...</option>
+                        <option value="Site Web">Site Web</option>
+                        <option value="Application Mobile">Application Mobile</option>
+                        <option value="Logiciel">Logiciel</option>
+                        <option value="Design">Design</option>
+                        <option value="Maintenance">Maintenance</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+                <div class="form-group">
+                    <label for="rdvDate">Date souhaitée *</label>
+                    <input type="date" id="rdvDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="rdvTime">Heure souhaitée *</label>
+                    <input type="time" id="rdvTime" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="rdvMessage">Message (optionnel)</label>
+                <textarea id="rdvMessage" rows="3" placeholder="Détaillez brièvement votre projet..."></textarea>
+            </div>
+            <button type="submit" class="btn-rdv">📅 Demander ce rendez-vous</button>
+        </form>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-brand"><div class="footer-logo"><img src="assets/images/logo.png" alt="Logo"></div><div class="footer-brand-text"><div class="footer-brand-name">AFRINOVA</div><div class="footer-brand-sub">TECH</div></div></div>
+                    <p class="footer-description">L'Afrique innove, le monde avance.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Liens rapides</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">→ Accueil</a></li>
+                        <li><a href="portfolio.html">→ Portfolio</a></li>
+                        <li><a href="galerie.html">→ Galerie</a></li>
+                        <li><a href="rendezvous.html">→ Rendez-vous</a></li>
+                        <li><a href="devis.html">→ Devis</a></li>
+                        <li><a href="blog/index.html">→ Blog</a></li>
+                        <li><a href="admin/index.html">🔐 Admin</a></li>
+                        <li><a href="mentions-legales.html">⚖️ Mentions Légales</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom"><p>© 2026 <span>Afrinova Tech</span>. Tous droits réservés.</p></div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/lang.js"></script>
+    <script>
+        document.getElementById('rdvForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            var rdv = {
+                name: document.getElementById('rdvName').value.trim(),
+                email: document.getElementById('rdvEmail').value.trim(),
+                phone: document.getElementById('rdvPhone').value.trim(),
+                service: document.getElementById('rdvService').value,
+                date: document.getElementById('rdvDate').value,
+                time: document.getElementById('rdvTime').value,
+                message: document.getElementById('rdvMessage').value.trim(),
+                status: 'new',
+                createdAt: new Date().toISOString()
+            };
+            
+            var appointments = JSON.parse(localStorage.getItem('afrinova_appointments') || '[]');
+            appointments.push(rdv);
+            localStorage.setItem('afrinova_appointments', JSON.stringify(appointments));
+            
+            document.getElementById('rdvForm').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
+            
+            // Message WhatsApp optionnel
+            var waMsg = '📅 *Demande de rendez-vous*%0A%0A' +
+                        '👤 *Nom:* ' + rdv.name + '%0A' +
+                        '📧 *Email:* ' + rdv.email + '%0A' +
+                        '📱 *Tél:* ' + (rdv.phone || 'Non spécifié') + '%0A' +
+                        '🛠 *Service:* ' + (rdv.service || 'Non spécifié') + '%0A' +
+                        '📅 *Date:* ' + rdv.date + ' à ' + rdv.time + '%0A' +
+                        '💬 *Message:* ' + (rdv.message || 'Aucun');
+            window.open('https://wa.me/22789434626?text=' + waMsg, '_blank');
+        });
+    </script>
+</body>
+</html>

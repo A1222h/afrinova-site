@@ -76,6 +76,7 @@ textarea{height:100px;resize:vertical}
 <div class="tab" onclick="showTab('nouveautes')">🆕 Annonces</div>
 <div class="tab" onclick="showTab('blog')">📝 Articles</div>
 <div class="tab" onclick="showTab('messages')">📩 Messages</div>
+<div class="tab" onclick="showTab('rendezvous')">📅 Rendez-vous</div>
 </div>
 
 <!-- PROJETS -->
@@ -141,6 +142,12 @@ textarea{height:100px;resize:vertical}
 <div id="tab-messages" class="tab-content">
 <h2>📩 Messages reçus</h2>
 <div id="messages-list"></div>
+</div>
+
+<!-- RENDEZ-VOUS -->
+<div id="tab-rendezvous" class="tab-content">
+<h2>📅 Rendez-vous demandés</h2>
+<div id="rdv-list"></div>
 </div>
 
 </div>
@@ -309,8 +316,19 @@ html+='<div class="item"><div class="item-info"><strong>'+msg.name+'</strong><p>
 document.getElementById('messages-list').innerHTML=html||'<p style="color:#888">Aucun message</p>';
 }
 
+// ============ RENDEZ-VOUS ============
+function loadRdv(){
+var rdvs=JSON.parse(localStorage.getItem('afrinova_appointments')||'[]');
+var html='';
+rdvs.slice(0,20).forEach(function(rdv,i){
+html+='<div class="item"><div class="item-info"><strong>'+rdv.name+'</strong><p>📅 '+rdv.date+' à '+rdv.time+' | 🛠 '+ (rdv.service||'Non spécifié') +' | 📧 '+rdv.email+'</p><p style="font-size:10px;color:#aaa">'+(rdv.message||'')+'</p></div><div class="item-actions"><button class="btn-red" onclick="deleteRdv('+i+')">🗑️</button></div></div>';
+});
+document.getElementById('rdv-list').innerHTML=html||'<p style="color:#888">Aucun rendez-vous</p>';
+}
+function deleteRdv(i){if(confirm('Supprimer ce rendez-vous ?')){var rdvs=JSON.parse(localStorage.getItem('afrinova_appointments')||'[]');rdvs.splice(i,1);localStorage.setItem('afrinova_appointments',JSON.stringify(rdvs));loadRdv();}}
+
 // CHARGER TOUT
-function loadAll(){loadProjets();loadNouveautes();loadArticles();loadMessages();}
+function loadAll(){loadProjets();loadNouveautes();loadArticles();loadMessages();loadRdv();}
 </script>
 </body>
 </html>
