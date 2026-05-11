@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://a1222h.github.io/afrinova-site/sitemap.xml

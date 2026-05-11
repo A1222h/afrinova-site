@@ -3,14 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Afrinova Tech — L'Afrique innove, le monde avance</title>
+    <title>Afrinova Tech – L'Afrique innove, le monde avance | Agadez, Niger</title>
+    <meta name="description" content="Afrinova Tech, dirigé par Abdelkader Hassan SADAK, crée des sites web, applications mobiles, logiciels et identités visuelles à Agadez, Niger. L'Afrique innove, le monde avance.">
+    <meta name="keywords" content="création site web Agadez, application mobile Niger, logiciel entreprise, design graphique, Afrinova Tech, Abdelkader Hassan SADAK">
+    <meta name="author" content="Afrinova Tech">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://a1222h.github.io/afrinova-site/">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Afrinova Tech – L'Afrique innove, le monde avance">
+    <meta property="og:description" content="Solutions digitales sur mesure par Abdelkader Hassan SADAK. Sites web, apps, logiciels, design. Basé à Agadez, Niger.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://a1222h.github.io/afrinova-site/">
+    <meta property="og:image" content="https://a1222h.github.io/afrinova-site/assets/images/logo.png">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Afrinova Tech">
+    <meta name="twitter:description" content="L'Afrique innove, le monde avance. Solutions digitales à Agadez.">
+    <meta name="twitter:image" content="https://a1222h.github.io/afrinova-site/assets/images/logo.png">
+    
+    <!-- Icône et PWA -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
-    <meta name="description" content="Solutions digitales sur mesure. Agadez, Niger.">
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="/afrinova-site/manifest.json">
     <meta name="theme-color" content="#D4AF37">
+    
+    <!-- Polices -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/mobile.css">
+    
+    <!-- Script langue -->
     <script src="assets/js/lang.js"></script>
 </head>
 <body>
@@ -149,6 +176,7 @@
                     <li><a href="devis.html">→ Devis</a></li>
                     <li><a href="blog/index.html">→ Blog</a></li>
                     <li><a href="admin/index.html">🔐 Admin</a></li>
+                    <li><a href="mentions-legales.html">⚖️ Mentions Légales</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -171,7 +199,9 @@
 <script>
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/sw.js').then(function(r) { console.log('✅ PWA OK'); }).catch(function(e) {});
+        navigator.serviceWorker.register('/afrinova-site/sw.js')
+            .then(function(r) { console.log('✅ PWA OK'); })
+            .catch(function(e) { console.log('SW:', e); });
     });
 }
 </script>
