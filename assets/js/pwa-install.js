@@ -2,13 +2,24 @@ let deferredPrompt;
 const banner = document.getElementById('installBanner');
 const btnInstall = document.getElementById('btnInstall');
 
-// Écoute l'événement natif (survient après quelques secondes d'interaction)
+// Événement d'installation natif (Android Chrome)
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    // Affiche la bannière UNIQUEMENT quand l'installation est possible en un clic
-    if (banner) banner.classList.add('show');
-    if (btnInstall) {
+    showBanner(true);
+});
+
+// Pour iOS : on détecte si l'appareil est en mode standalone
+if (window.navigator.standalone) {
+    if (banner) banner.classList.remove('show');
+} else {
+    // On peut afficher une bannière d'aide spécifique pour iOS après un délai
+    // Mais pour l'instant, on ne l'affiche pas pour iOS si pas natif (on garde propre)
+}
+
+function showBanner(isNative) {
+    if (!banner) return;
+    if (isNative && deferredPrompt) {
         btnInstall.textContent = '📲 Installer maintenant';
         btnInstall.onclick = () => {
             deferredPrompt.prompt();
@@ -20,17 +31,21 @@ window.addEventListener('beforeinstallprompt', (e) => {
                 banner.classList.remove('show');
             });
         };
+        banner.classList.add('show');
+    } else {
+        // Pas natif : on ne montre rien
+        banner.classList.remove('show');
     }
-});
+}
 
-// Si après 10 secondes l'événement n'est toujours pas arrivé, on cache la bannière définitivement
+// Si après 5 secondes l'événement n'est pas arrivé, on ne fait rien (on attend)
 setTimeout(() => {
+    // Si pas de deferredPrompt après 5s, on ne montre pas la bannière
     if (!deferredPrompt && banner) {
         banner.classList.remove('show');
     }
-}, 10000);
+}, 5000);
 
-// Cache la bannière si l'application est déjà installée
 window.addEventListener('appinstalled', () => {
     if (banner) banner.classList.remove('show');
 });
