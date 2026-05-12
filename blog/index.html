@@ -4,127 +4,173 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog - Afrinova Tech</title>
+    <meta name="description" content="Actualités, tutoriels et innovations tech en Afrique par Afrinova Tech.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📝</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/mobile.css">
     <style>
+        .blog-layout {
+            display: flex;
+            max-width: 1200px;
+            margin: 80px auto 40px;
+            padding: 20px;
+            gap: 30px;
+        }
+        .blog-main {
+            flex: 2;
+            min-width: 0;
+        }
+        .blog-sidebar {
+            flex: 1;
+            background: #161616;
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 16px;
+            padding: 25px;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
         .blog-hero {
-            padding: 120px 20px 40px;
             text-align: center;
+            padding: 40px 20px;
         }
         .blog-hero h1 {
             font-family: 'Orbitron', sans-serif;
             color: #D4AF37;
-            font-size: 40px;
+            font-size: 36px;
             margin-bottom: 10px;
         }
         .blog-hero p {
             color: #888;
-            font-size: 18px;
-            margin-bottom: 30px;
+            font-size: 16px;
         }
-        .blog-search {
+        .search-box {
             display: flex;
-            max-width: 500px;
-            margin: 0 auto;
             gap: 10px;
+            margin-bottom: 20px;
         }
-        .blog-search input {
+        .search-box input {
             flex: 1;
-            padding: 15px 20px;
+            padding: 12px 20px;
             background: #111;
             border: 1px solid rgba(212,175,55,0.3);
             border-radius: 30px;
             color: #fff;
-            font-size: 16px;
+            font-size: 15px;
             outline: none;
         }
-        .blog-search input:focus {
+        .search-box input:focus {
             border-color: #D4AF37;
         }
-        .blog-search button {
-            padding: 15px 25px;
+        .search-box button {
+            padding: 12px 24px;
             background: #D4AF37;
             color: #000;
             border: none;
             border-radius: 30px;
             font-weight: 700;
             cursor: pointer;
-            font-size: 16px;
+            transition: 0.3s;
         }
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 25px;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
+        .search-box button:hover {
+            background: #fff;
         }
-        .blog-card {
-            background: #161616;
-            border: 1px solid rgba(212,175,55,0.2);
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        .category-btn {
+            padding: 8px 18px;
+            background: #111;
+            border: 1px solid rgba(212,175,55,0.3);
+            color: #ccc;
             border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.3s;
+            font-size: 13px;
             cursor: pointer;
+            transition: 0.3s;
         }
-        .blog-card:hover {
+        .category-btn:hover, .category-btn.active {
+            background: #D4AF37;
+            color: #000;
             border-color: #D4AF37;
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            font-weight: bold;
         }
-        .blog-card-image {
-            width: 100%;
+        .article-card {
+            background: #161616;
+            border: 1px solid rgba(212,175,55,0.15);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            transition: 0.3s;
+        }
+        .article-card:hover {
+            border-color: #D4AF37;
+            transform: translateY(-3px);
+        }
+        .article-image {
             height: 200px;
+            background-size: cover;
+            background-position: center;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 60px;
+            font-size: 50px;
         }
-        .blog-card-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .blog-card-body {
+        .article-body {
             padding: 20px;
         }
-        .blog-card-body h3 {
-            font-family: 'Orbitron', sans-serif;
+        .article-body h3 {
             color: #D4AF37;
-            font-size: 18px;
+            font-size: 20px;
             margin-bottom: 10px;
         }
-        .blog-card-body p {
-            color: #888;
+        .article-body p {
+            color: #ccc;
             font-size: 14px;
             line-height: 1.6;
-            margin-bottom: 15px;
         }
-        .blog-card-body .date {
-            color: #666;
-            font-size: 12px;
-        }
-        .blog-categories {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 10px;
-        }
-        .blog-cat {
-            background: rgba(212,175,55,0.1);
-            color: #D4AF37;
-            padding: 3px 12px;
-            border-radius: 15px;
-            font-size: 12px;
-            border: 1px solid rgba(212,175,55,0.3);
-        }
-        .empty-blog {
-            text-align: center;
-            padding: 60px;
+        .article-meta {
             color: #888;
-            grid-column: 1 / -1;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        .sidebar-title {
+            font-family: 'Orbitron', sans-serif;
+            color: #D4AF37;
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(212,175,55,0.2);
+        }
+        .recent-item {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .recent-item a {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        .recent-item a:hover {
+            color: #D4AF37;
+        }
+        .no-results {
+            text-align: center;
+            color: #888;
+            padding: 40px;
+        }
+        @media (max-width: 768px) {
+            .blog-layout {
+                flex-direction: column;
+            }
+            .blog-sidebar {
+                position: static;
+                margin-top: 30px;
+            }
         }
     </style>
 </head>
@@ -156,26 +202,32 @@
     <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
 </nav>
 
-<!-- Hero -->
 <div class="blog-hero">
     <h1>📝 Blog Afrinova</h1>
     <p>Actualités, tutoriels et innovations tech en Afrique</p>
-    <div class="blog-search">
-        <input type="text" id="searchInput" placeholder="Rechercher un article...">
-        <button onclick="searchArticles()">🔍</button>
-    </div>
 </div>
 
-<!-- Articles -->
-<div class="blog-grid" id="blogGrid">
-    <div class="empty-blog">
-        <p>📭 Aucun article pour le moment</p>
-        <p style="margin-top:10px;">Les articles apparaîtront ici une fois publiés depuis l'admin</p>
-        <a href="../admin/index.html" style="color:#D4AF37;margin-top:15px;display:inline-block;">→ Accéder à l'admin</a>
+<div class="blog-layout">
+    <!-- Contenu principal -->
+    <div class="blog-main">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Rechercher un article..." oninput="filtrerArticles()">
+            <button onclick="filtrerArticles()">🔍</button>
+        </div>
+        <div class="categories" id="categoriesContainer"></div>
+        <div id="articlesContainer"></div>
     </div>
+
+    <!-- Sidebar -->
+    <aside class="blog-sidebar">
+        <h3 class="sidebar-title">📰 Articles récents</h3>
+        <div id="recentArticles"></div>
+
+        <h3 class="sidebar-title" style="margin-top:20px;">🏷️ Catégories</h3>
+        <div id="sidebarCategories" style="display:flex;flex-wrap:wrap;gap:6px;"></div>
+    </aside>
 </div>
 
-<!-- Footer -->
 <footer class="footer">
     <div class="footer-container">
         <div class="footer-bottom">
@@ -187,76 +239,126 @@
 <script src="../assets/js/main.js"></script>
 <script src="../assets/js/lang.js"></script>
 <script>
-// ============ CHARGER LES ARTICLES ============
+// Articles
 var articles = JSON.parse(localStorage.getItem('afrinova_articles') || '[]');
+articles.sort(function(a, b) { return new Date(b.date) - new Date(a.date); });
 
-var couleurs = ['1a1a2e','0f0f23','1a1025','0a1a1a','2d1a3e','16213e'];
-var emojis = ['💻','📱','🌐','🎨','🔒','🤖','📊','🚀'];
-
-function afficherArticles(filtre) {
-    var grid = document.getElementById('blogGrid');
-    var liste = articles;
-    
-    if (filtre) {
-        liste = articles.filter(function(a) {
-            return a.titre.toLowerCase().includes(filtre.toLowerCase()) || 
-                   a.contenu.toLowerCase().includes(filtre.toLowerCase()) ||
-                   (a.categorie || '').toLowerCase().includes(filtre.toLowerCase());
-        });
+// Catégories uniques
+var categories = [];
+articles.forEach(function(a) {
+    if (a.categorie && categories.indexOf(a.categorie) === -1) {
+        categories.push(a.categorie);
     }
-    
-    if (liste.length === 0) {
-        grid.innerHTML = '<div class="empty-blog"><p>📭 Aucun article trouvé</p></div>';
-        return;
-    }
-    
-    // Trier par date
-    liste.sort(function(a, b) { return new Date(b.date) - new Date(a.date); });
-    
-    var html = '';
-    liste.forEach(function(article, index) {
-        var couleur = couleurs[index % couleurs.length];
-        var emoji = article.emoji || emojis[index % emojis.length];
-        var date = new Date(article.date);
-        var dateStr = date.getDate() + ' ' + ['jan','fév','mar','avr','mai','juin','juil','août','sep','oct','nov','déc'][date.getMonth()] + ' ' + date.getFullYear();
-        
-        var imageHTML = '';
-        if (article.image) {
-            imageHTML = '<img src="' + article.image + '" alt="' + article.titre + '">';
-        } else {
-            imageHTML = '<span style="font-size:60px;">' + emoji + '</span>';
-        }
-        
-        var categoriesHTML = '';
-        if (article.categorie) {
-            categoriesHTML = '<div class="blog-categories"><span class="blog-cat">' + article.categorie + '</span></div>';
-        }
-        
-        html += '<div class="blog-card">';
-        html += '<div class="blog-card-image" style="background:#' + couleur + ';">' + imageHTML + '</div>';
-        html += '<div class="blog-card-body">';
-        html += categoriesHTML;
-        html += '<h3>' + article.titre + '</h3>';
-        html += '<p>' + (article.contenu || '').substring(0, 150) + '...</p>';
-        html += '<div class="date">📅 ' + dateStr + '</div>';
-        html += '</div>';
-        html += '</div>';
-    });
-    
-    grid.innerHTML = html;
-}
-
-function searchArticles() {
-    var filtre = document.getElementById('searchInput').value;
-    afficherArticles(filtre);
-}
-
-document.getElementById('searchInput').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') searchArticles();
 });
 
-// Afficher au chargement
+var currentFilter = null; // catégorie active ou null pour "Tous"
+
+// Afficher les boutons de catégories
+function afficherCategories() {
+    var container = document.getElementById('categoriesContainer');
+    var sidebar = document.getElementById('sidebarCategories');
+    
+    // Boutons principaux
+    var html = '<button class="category-btn active" onclick="filtrerParCategorie(null)">Tous</button>';
+    categories.forEach(function(cat) {
+        html += '<button class="category-btn" onclick="filtrerParCategorie(\'' + cat + '\')">' + cat + '</button>';
+    });
+    container.innerHTML = html;
+    
+    // Dans la sidebar (mini boutons)
+    var sidebarHtml = '';
+    categories.forEach(function(cat) {
+        sidebarHtml += '<button class="category-btn" style="font-size:11px;padding:4px 12px;" onclick="filtrerParCategorie(\'' + cat + '\')">' + cat + '</button>';
+    });
+    sidebar.innerHTML = sidebarHtml || '<span style="color:#888">Aucune catégorie</span>';
+}
+
+// Filtrer par catégorie
+function filtrerParCategorie(categorie) {
+    currentFilter = categorie;
+    // Mise en forme des boutons
+    document.querySelectorAll('.category-btn').forEach(function(btn) {
+        btn.classList.remove('active');
+    });
+    var activeBtn = document.querySelector('.category-btn[onclick*="' + (categorie ? categorie : 'null') + '"]');
+    if (activeBtn) activeBtn.classList.add('active');
+    
+    afficherArticles(document.getElementById('searchInput').value);
+}
+
+// Afficher les articles selon le filtre texte et la catégorie
+function afficherArticles(texte) {
+    var conteneur = document.getElementById('articlesContainer');
+    var liste = articles;
+
+    // Filtre catégorie
+    if (currentFilter) {
+        liste = liste.filter(function(a) { return a.categorie === currentFilter; });
+    }
+
+    // Filtre texte
+    if (texte && texte.trim() !== '') {
+        var terme = texte.toLowerCase();
+        liste = liste.filter(function(a) {
+            return a.titre.toLowerCase().includes(terme) ||
+                   (a.contenu || '').toLowerCase().includes(terme) ||
+                   (a.categorie || '').toLowerCase().includes(terme);
+        });
+    }
+
+    if (liste.length === 0) {
+        conteneur.innerHTML = '<div class="no-results">📭 Aucun article trouvé</div>';
+        return;
+    }
+
+    var html = '';
+    liste.forEach(function(article) {
+        var date = new Date(article.date);
+        var dateStr = date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear();
+        var imageStyle = '';
+        if (article.image) {
+            imageStyle = 'background-image:url(' + article.image + ');';
+        } else {
+            imageStyle = 'background-color:#1a1a2e;';
+        }
+        var emoji = article.emoji || '📄';
+        var imageHTML = article.image ? '' : '<span style="font-size:50px">' + emoji + '</span>';
+        var extrait = (article.contenu || '').substring(0, 150);
+        html += '<div class="article-card">';
+        html += '<div class="article-image" style="' + imageStyle + '">' + imageHTML + '</div>';
+        html += '<div class="article-body">';
+        html += '<h3>' + article.titre + '</h3>';
+        html += '<p>' + extrait + '...</p>';
+        html += '<div class="article-meta">📅 ' + dateStr + ' | 📁 ' + (article.categorie || 'Non classé') + '</div>';
+        html += '</div></div>';
+    });
+    conteneur.innerHTML = html;
+}
+
+// Afficher les 5 derniers articles dans la sidebar
+function afficherRecents() {
+    var sidebar = document.getElementById('recentArticles');
+    var recents = articles.slice(0, 5);
+    if (recents.length === 0) {
+        sidebar.innerHTML = '<p style="color:#888">Aucun article</p>';
+        return;
+    }
+    var html = '';
+    recents.forEach(function(article, index) {
+        html += '<div class="recent-item"><a href="#" onclick="filtrerParCategorie(null); afficherArticles(\'' + article.titre + '\')">' + article.titre + '</a></div>';
+    });
+    sidebar.innerHTML = html;
+}
+
+// Fonction de recherche
+function filtrerArticles() {
+    afficherArticles(document.getElementById('searchInput').value);
+}
+
+// Initialisation
+afficherCategories();
 afficherArticles();
+afficherRecents();
 </script>
 </body>
 </html>
