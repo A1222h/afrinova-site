@@ -1,32 +1,15 @@
-// Gestion de l'installation PWA – bannière toujours visible
 let deferredPrompt;
 const banner = document.getElementById('installBanner');
 const btnInstall = document.getElementById('btnInstall');
 
-// Écoute l'événement avant installation (disponible après une courte utilisation)
+// Événement automatique (quand le navigateur le propose)
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    // Affiche la bannière avec le bouton
     if (banner) banner.classList.add('show');
-});
-
-// Si la bannière n'est pas encore affichée après 3 secondes, on l'affiche quand même
-setTimeout(() => {
-    if (!deferredPrompt && banner) {
-        banner.classList.add('show');
-        if (btnInstall) {
-            btnInstall.textContent = '📲 Ajouter à l\'écran d\'accueil';
-            btnInstall.onclick = showManualInstall;
-        }
-    }
-}, 3000);
-
-// Affiche la bannière immédiatement si déjà installé ? Non, on garde juste pour l'installation.
-// Bouton cliqué dans la bannière
-if (btnInstall) {
-    btnInstall.addEventListener('click', () => {
-        if (deferredPrompt) {
+    if (btnInstall) {
+        btnInstall.textContent = '📲 Installer maintenant';
+        btnInstall.onclick = () => {
             deferredPrompt.prompt();
             deferredPrompt.userChoice.then((choiceResult) => {
                 if (choiceResult.outcome === 'accepted') {
@@ -35,18 +18,31 @@ if (btnInstall) {
                 deferredPrompt = null;
                 banner.classList.remove('show');
             });
-        } else {
-            showManualInstall();
+        };
+    }
+});
+
+// Si au bout de 3 secondes l'installation auto n'est pas disponible
+setTimeout(() => {
+    if (!deferredPrompt && banner) {
+        banner.classList.add('show');
+        if (btnInstall) {
+            btnInstall.textContent = '📲 Comment installer';
+            btnInstall.onclick = () => {
+                // Affiche les instructions dans la bannière elle-même
+                banner.innerHTML = `
+                    <span>📱 Appuyez sur ⋮ → "Ajouter à l'écran d'accueil"</span>
+                    <button id="btnCloseHelp" style="margin-left:10px; padding:8px 16px; background:#000; color:#D4AF37; border:none; border-radius:20px; font-weight:bold; cursor:pointer;">OK</button>
+                `;
+                document.getElementById('btnCloseHelp').addEventListener('click', () => {
+                    banner.classList.remove('show');
+                });
+            };
         }
-    });
-}
+    }
+}, 3000);
 
-function showManualInstall() {
-    alert('Pour installer l\'application :\n1. Appuyez sur les 3 points ⋮ en haut à droite du navigateur.\n2. Sélectionnez "Ajouter à l\'écran d\'accueil" ou "Installer l\'application".');
-}
-
-// Vérifie si l'application est déjà installée (ne plus afficher la bannière)
+// Vérifie si déjà installée
 window.addEventListener('appinstalled', () => {
     if (banner) banner.classList.remove('show');
-    console.log('Application installée');
 });
