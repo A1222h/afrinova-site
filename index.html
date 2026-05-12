@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Afrinova Tech – L'Afrique innove, le monde avance | Agadez, Niger</title>
-    <meta name="description" content="Afrinova Tech, dirigé par Abdelkader Hassan SADAK, crée des sites web, applications mobiles, logiciels et identités visuelles à Agadez, Niger. L'Afrique innove, le monde avance.">
-    <meta name="keywords" content="création site web Agadez, application mobile Niger, logiciel entreprise, design graphique, Afrinova Tech, Abdelkader Hassan SADAK">
+    <meta name="description" content="Afrinova Tech, dirigé par Abdelkader Hassan SADAK, crée des sites web, applications mobiles, logiciels et identités visuelles à Agadez, Niger.">
+    <meta name="keywords" content="création site web Agadez, application mobile Niger, logiciel entreprise, design graphique, Afrinova Tech">
     <meta name="author" content="Afrinova Tech">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://a1222h.github.io/afrinova-site/">
@@ -183,13 +183,14 @@
             <a href="https://wa.me/22789434626" target="_blank" class="contact-info-card"><div class="contact-icon">💬</div><h3>WhatsApp</h3><p>Discussion instantanée</p></a>
             <div class="contact-info-card"><div class="contact-icon">📍</div><h3>Localisation</h3><p>Agadez, Niger</p></div>
         </div>
-        <form class="contact-form" id="contactForm">
+        <form class="contact-form" id="contactForm" action="https://formspree.io/f/mgoddyke" method="POST">
+            <input type="hidden" name="_subject" value="Nouveau message Afrinova Tech">
             <h3>Envoyez-nous un message</h3>
-            <div class="form-group"><label for="name">Nom complet</label><input type="text" id="name" required placeholder="Votre nom"></div>
-            <div class="form-group"><label for="email">Email</label><input type="email" id="email" required placeholder="votre@email.com"></div>
-            <div class="form-group"><label for="phone">Téléphone</label><input type="tel" id="phone" placeholder="+227 XX XX XX XX"></div>
-            <div class="form-group"><label for="service">Service souhaité</label><select id="service" required><option value="">Choisissez</option><option value="Site Web">Site Web</option><option value="App Mobile">App Mobile</option><option value="Logiciel">Logiciel</option><option value="Design">Design</option><option value="Maintenance">Maintenance</option></select></div>
-            <div class="form-group"><label for="message">Votre projet</label><textarea id="message" required placeholder="Décrivez votre projet..." rows="5"></textarea></div>
+            <div class="form-group"><label for="name">Nom complet</label><input type="text" id="name" name="name" required placeholder="Votre nom"></div>
+            <div class="form-group"><label for="email">Email</label><input type="email" id="email" name="email" required placeholder="votre@email.com"></div>
+            <div class="form-group"><label for="phone">Téléphone</label><input type="tel" id="phone" name="phone" placeholder="+227 XX XX XX XX"></div>
+            <div class="form-group"><label for="service">Service souhaité</label><select id="service" name="service" required><option value="">Choisissez</option><option value="Site Web">Site Web</option><option value="App Mobile">App Mobile</option><option value="Logiciel">Logiciel</option><option value="Design">Design</option><option value="Maintenance">Maintenance</option></select></div>
+            <div class="form-group"><label for="message">Votre projet</label><textarea id="message" name="message" required placeholder="Décrivez votre projet..." rows="5"></textarea></div>
             <button type="submit" class="btn-primary submit-btn"><span>Envoyer</span><span>→</span></button>
         </form>
     </div>
@@ -239,13 +240,12 @@
     var temoignages = JSON.parse(localStorage.getItem('afrinova_temoignages') || '[]');
     var publies = temoignages.filter(function(t){ return t.publie !== false; });
     var track = document.getElementById('testimonialsTrack');
-    var dotsContainer = document.getElementById('testimonialsDots');
     if(publies.length === 0) {
         track.innerHTML = '<p style="color:#888;text-align:center;width:100%">Aucun témoignage pour le moment.</p>';
         return;
     }
     var html = '';
-    publies.forEach(function(t, i){
+    publies.forEach(function(t){
         var stars = '⭐'.repeat(t.note || 5);
         var imageHTML = t.image ? '<img src="'+t.image+'" alt="'+t.nom+'">' : '<div style="width:60px;height:60px;border-radius:50%;background:#D4AF37;display:flex;align-items:center;justify-content:center;font-size:24px;color:#000;margin:0 auto 10px">'+(t.nom.charAt(0).toUpperCase())+'</div>';
         html += '<div class="testimonial-card">'+imageHTML+'<div class="testimonial-stars">'+stars+'</div><p class="testimonial-text">"'+t.texte+'"</p><div class="testimonial-author">'+t.nom+'</div><div class="testimonial-post">'+ (t.poste || '') +'</div></div>';

@@ -128,25 +128,26 @@
             ✅ Votre demande de rendez-vous a été envoyée avec succès. Nous vous contacterons rapidement pour confirmer.
         </div>
 
-        <form id="rdvForm">
+        <form id="rdvForm" action="https://formspree.io/f/mgoddyke" method="POST">
+            <input type="hidden" name="_subject" value="Demande de rendez-vous Afrinova Tech">
             <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
                 <div class="form-group">
                     <label for="rdvName">Nom complet *</label>
-                    <input type="text" id="rdvName" required placeholder="Votre nom">
+                    <input type="text" id="rdvName" name="name" required placeholder="Votre nom">
                 </div>
                 <div class="form-group">
                     <label for="rdvEmail">Email *</label>
-                    <input type="email" id="rdvEmail" required placeholder="votre@email.com">
+                    <input type="email" id="rdvEmail" name="email" required placeholder="votre@email.com">
                 </div>
             </div>
             <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
                 <div class="form-group">
                     <label for="rdvPhone">Téléphone</label>
-                    <input type="tel" id="rdvPhone" placeholder="+227 XX XX XX XX">
+                    <input type="tel" id="rdvPhone" name="phone" placeholder="+227 XX XX XX XX">
                 </div>
                 <div class="form-group">
                     <label for="rdvService">Service souhaité</label>
-                    <select id="rdvService">
+                    <select id="rdvService" name="service">
                         <option value="">Choisissez...</option>
                         <option value="Site Web">Site Web</option>
                         <option value="Application Mobile">Application Mobile</option>
@@ -159,16 +160,16 @@
             <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
                 <div class="form-group">
                     <label for="rdvDate">Date souhaitée *</label>
-                    <input type="date" id="rdvDate" required>
+                    <input type="date" id="rdvDate" name="date" required>
                 </div>
                 <div class="form-group">
                     <label for="rdvTime">Heure souhaitée *</label>
-                    <input type="time" id="rdvTime" required>
+                    <input type="time" id="rdvTime" name="time" required>
                 </div>
             </div>
             <div class="form-group">
                 <label for="rdvMessage">Message (optionnel)</label>
-                <textarea id="rdvMessage" rows="3" placeholder="Détaillez brièvement votre projet..."></textarea>
+                <textarea id="rdvMessage" name="message" rows="3" placeholder="Détaillez brièvement votre projet..."></textarea>
             </div>
             <button type="submit" class="btn-rdv">📅 Demander ce rendez-vous</button>
         </form>
@@ -203,8 +204,6 @@
     <script src="assets/js/lang.js"></script>
     <script>
         document.getElementById('rdvForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
             var rdv = {
                 name: document.getElementById('rdvName').value.trim(),
                 email: document.getElementById('rdvEmail').value.trim(),
@@ -217,22 +216,18 @@
                 createdAt: new Date().toISOString()
             };
             
+            if (!rdv.name || !rdv.email || !rdv.date || !rdv.time) {
+                e.preventDefault();
+                alert('Veuillez remplir tous les champs obligatoires.');
+                return;
+            }
+            
             var appointments = JSON.parse(localStorage.getItem('afrinova_appointments') || '[]');
             appointments.push(rdv);
             localStorage.setItem('afrinova_appointments', JSON.stringify(appointments));
             
             document.getElementById('rdvForm').style.display = 'none';
             document.getElementById('successMessage').style.display = 'block';
-            
-            // Message WhatsApp optionnel
-            var waMsg = '📅 *Demande de rendez-vous*%0A%0A' +
-                        '👤 *Nom:* ' + rdv.name + '%0A' +
-                        '📧 *Email:* ' + rdv.email + '%0A' +
-                        '📱 *Tél:* ' + (rdv.phone || 'Non spécifié') + '%0A' +
-                        '🛠 *Service:* ' + (rdv.service || 'Non spécifié') + '%0A' +
-                        '📅 *Date:* ' + rdv.date + ' à ' + rdv.time + '%0A' +
-                        '💬 *Message:* ' + (rdv.message || 'Aucun');
-            window.open('https://wa.me/22789434626?text=' + waMsg, '_blank');
         });
     </script>
 </body>
